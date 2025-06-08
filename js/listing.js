@@ -160,4 +160,4 @@ const resultsSection = document.createElement("section");
 
   document.getElementById("filter").addEventListener("click", filterRentals);
 });
-//#endregion
+//#endregion0
