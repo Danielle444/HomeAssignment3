@@ -156,7 +156,7 @@ sortedRatings.forEach(function(rating) {
   });
 }
 
-
+//#region פילטר
   function filterRentals() {
     const minRating = parseInt(ratingSelect.value)
     const minPrice = parseInt(rngMin.value);
@@ -184,7 +184,9 @@ sortedRatings.forEach(function(rating) {
     countHeader.textContent = "Found " + filtered.length + " rentals";
     displayResults(filtered);
   }
+    document.getElementById("filter").addEventListener("click", filterRentals);
+
+  //#endregion
 //#endregion
-  document.getElementById("filter").addEventListener("click", filterRentals);
 });
 
