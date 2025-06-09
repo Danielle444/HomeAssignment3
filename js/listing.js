@@ -135,6 +135,32 @@ const resultsSection = document.createElement("section");
   });
 }
 
+const ratingSelect = document.getElementById("slctMinRating");
+ratingSelect.innerHTML = "";
+
+const ratingOptions = new Set();
+
+rentals.forEach(r => {
+  const rating = parseInt(r.review_scores_rating);
+  if (!isNaN(rating)) {
+    ratingOptions.add(rating);
+  }
+});
+
+const sortedRatings = Array.from(ratingOptions).sort((a, b) => a - b);
+
+const defaultOpt = document.createElement("option");
+defaultOpt.value = 0;
+defaultOpt.textContent = "Any";
+ratingSelect.appendChild(defaultOpt);
+
+sortedRatings.forEach(rating => {
+  const opt = document.createElement("option");
+  opt.value = rating;
+  opt.textContent = rating + (rating > 1 ? " stars" : " star");
+  ratingSelect.appendChild(opt);
+});
+
 
   function filterRentals() {
     const minRating = parseInt(document.getElementById("slctMinRating").value);
