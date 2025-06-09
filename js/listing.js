@@ -79,7 +79,33 @@ displayMax.textContent = rngMax.value  + '$';
     displayMax.textContent = rngMax.value  + '$';
   });
 //#endregion
-  
+//#region דירוג
+const ratingSelect = document.getElementById("slctMinRating");
+ratingSelect.innerHTML = "";
+
+const ratingOptions = new Set();
+
+rentals.forEach(function(r) {
+  const rating = parseInt(r.review_scores_rating);
+  if (!isNaN(rating)) {
+    ratingOptions.add(rating);
+  }
+});
+
+const sortedRatings = Array.from(ratingOptions).sort((a, b) => a - b);
+
+const defaultOpt = document.createElement("option");
+defaultOpt.value = 0;
+defaultOpt.textContent = "Any";
+ratingSelect.appendChild(defaultOpt);
+
+sortedRatings.forEach(function(rating) {
+  const opt = document.createElement("option");
+  opt.value = rating;
+  opt.textContent = rating + (rating > 1 ? " stars" : " star");
+  ratingSelect.appendChild(opt);
+});
+//#endregion
 //#region תוצאות
  function displayResults(filtered) {
   const resultsSection = document.getElementById("results");
@@ -130,35 +156,9 @@ displayMax.textContent = rngMax.value  + '$';
   });
 }
 
-const ratingSelect = document.getElementById("slctMinRating");
-ratingSelect.innerHTML = "";
-
-const ratingOptions = new Set();
-
-rentals.forEach(r => {
-  const rating = parseInt(r.review_scores_rating);
-  if (!isNaN(rating)) {
-    ratingOptions.add(rating);
-  }
-});
-
-const sortedRatings = Array.from(ratingOptions).sort((a, b) => a - b);
-
-const defaultOpt = document.createElement("option");
-defaultOpt.value = 0;
-defaultOpt.textContent = "Any";
-ratingSelect.appendChild(defaultOpt);
-
-sortedRatings.forEach(rating => {
-  const opt = document.createElement("option");
-  opt.value = rating;
-  opt.textContent = rating + (rating > 1 ? " stars" : " star");
-  ratingSelect.appendChild(opt);
-});
-
 
   function filterRentals() {
-    const minRating = parseInt(document.getElementById("slctMinRating").value);
+    const minRating = parseInt(ratingSelect.value)
     const minPrice = parseInt(rngMin.value);
     const maxPrice = parseInt(rngMax.value);
     const selectedRooms = roomSelect.value;
@@ -184,7 +184,7 @@ sortedRatings.forEach(rating => {
     countHeader.textContent = "Found " + filtered.length + " rentals";
     displayResults(filtered);
   }
-
+//#endregion
   document.getElementById("filter").addEventListener("click", filterRentals);
 });
-//#endregion
+
