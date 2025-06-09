@@ -158,7 +158,12 @@ sortedRatings.forEach(rating => {
 
 
   function filterRentals() {
-    const minRating = parseInt(document.getElementById("slctMinRating").value);
+    const minRateSTR = document.getElementById("slctMinRating").value;
+    let minRating = 0;
+    if(typeof minRateSTR === 'int')
+    {
+       minRating = parseInt(minRateSTR)
+    }
     const minPrice = parseInt(rngMin.value);
     const maxPrice = parseInt(rngMax.value);
     const selectedRooms = roomSelect.value;
@@ -169,7 +174,7 @@ sortedRatings.forEach(rating => {
         return;
     }
 
-    const filtered = rentals.filter(function (r) {
+      const filtered = rentals.filter(function (r) {
       const rating = parseInt(r.review_scores_rating || 0);
       const price = parseFloat(r.price.replace("$", ""));
       const rooms = r.bedrooms;
