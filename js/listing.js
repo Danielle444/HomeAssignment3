@@ -122,7 +122,7 @@ const resultsSection = document.createElement("section");
       " | <strong>Rating:</strong> " +
       listing.review_scores_rating +
       "</p>" +
-      "<button onclick=\"location.href='rent.html?id=" +
+      "<button onclick=\"location.href='rent.html?listingId=" +
       listing.listing_id +
       "'\">Rent</button>" +
       '<button onclick="toggleFavorite(this, ' +
