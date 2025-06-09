@@ -3,35 +3,43 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title></title>
+    <title>Login - Amsterdam Rentals</title>
     <link rel="icon" href="images/icon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="css/auth.css" />
   </head>
-  <body>
-    <section>
-      <div>
-        <h1>WELCOME</h1>
-      </div>
-      <div>
-        <h2>LOG IN HERE</h2>
-        <div>
-          <p>user name</p>
-          <input type="text" id="loginName" />
+  <body class="login-page">
+    <div class="auth-container">
+      <div class="auth-card login-card">
+        <div class="welcome-section">
+          <h1 class="main-title">WELCOME</h1>
+          <p class="subtitle">Find your perfect stay in Amsterdam</p>
         </div>
-        <div>
-          <p>password</p>
-          <input type="password" id="loginPassword" />
+        
+        <div class="form-section">
+          <h2 class="form-title">LOG IN HERE</h2>
+          
+          <div class="input-group">
+            <label for="loginName">Username</label>
+            <input type="text" id="loginName" class="form-input" placeholder="Enter your username" />
+          </div>
+          
+          <div class="input-group">
+            <label for="loginPassword">Password</label>
+            <input type="password" id="loginPassword" class="form-input" placeholder="Enter your password" />
+          </div>
+          
+          <button type="button" id="btnLogin" class="btn btn-primary">LOG IN</button>
         </div>
-        <input type="button" value="LOG IN" id="btnLogin" />
+        
+        <div class="redirect-section">
+          <h3 class="redirect-text">
+            Don't have an account yet?<br />
+            Sign up here
+          </h3>
+          <button type="button" id="btngoToRegister" class="btn btn-secondary">SIGN UP</button>
+        </div>
       </div>
-      <div>
-        <h3>
-          Don't have an acount yet?<br />
-          Sign up here
-        </h3>
-        <input type="button" value="SIGN UP" id="btngoToRegister" />
-      </div>
-    </section>
+    </div>
     <script src="js/auth.js" defer></script>
   </body>
 </html>

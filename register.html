@@ -3,33 +3,43 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title></title>
+    <title>Register - Amsterdam Rentals</title>
     <link rel="icon" href="images/icon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="css/auth.css" />
   </head>
-  <body>
-    <section>
-      <h1>WELOCIME NEW USER</h1>
-      <div>
-        <h2>SIGN UP HERE</h2>
-        <div>
-          <p>user name</p>
-          <input type="text" id="signupUserName" />
+  <body class="register-page">
+    <div class="auth-container">
+      <div class="auth-card register-card">
+        <div class="welcome-section">
+          <h1 class="main-title">WELCOME NEW USER</h1>
+          <p class="subtitle">Join us and discover amazing apartments</p>
         </div>
-        <div>
-          <p>password</p>
-          <input type="password" id="signupPassword" />
+        
+        <div class="form-section">
+          <h2 class="form-title">SIGN UP HERE</h2>
+          
+          <div class="input-group">
+            <label for="signupUserName">Username</label>
+            <input type="text" id="signupUserName" class="form-input" placeholder="Choose a username" />
+          </div>
+          
+          <div class="input-group">
+            <label for="signupPassword">Password</label>
+            <input type="password" id="signupPassword" class="form-input" placeholder="Create a password" />
+          </div>
+          
+          <button type="button" id="btnSignup" class="btn btn-primary">SIGN UP</button>
         </div>
-        <input type="button" value="SIGN UP" id="btnSignup" />
-        <div>
-          <h3>
+        
+        <div class="redirect-section">
+          <h3 class="redirect-text">
             Already registered?<br />
             Sign in here
           </h3>
-          <input type="button" value="SIGN IN" id="btnGoToLogin" />
+          <button type="button" id="btnGoToLogin" class="btn btn-secondary">SIGN IN</button>
         </div>
       </div>
-    </section>
+    </div>
     <script src="js/auth.js" defer></script>
   </body>
 </html>

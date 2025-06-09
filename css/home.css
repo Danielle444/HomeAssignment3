@@ -1,52 +1,235 @@
 .card {
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  padding: 16px;
-  margin: 16px auto;
-  max-width: 400px;
-  background-color: #f9f9f9;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  background: white;
+  border: 1px solid rgba(86, 119, 143, 0.2);
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(86, 119, 143, 0.1);
   text-align: center;
-  font-family: Arial, sans-serif;
+  font-family: inherit;
+  max-width: 380px;
+  margin: 0 auto;
 }
 
 .card img {
   width: 100%;
-  height: auto;
-  border-radius: 8px;
-  margin-bottom: 12px;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-bottom: 15px;
 }
 
 .card h3 {
-  margin: 8px 0;
-  color: #333;
+  margin: 12px 0 8px 0;
+  color: #56778f;
+  font-size: 20px;
+  font-weight: 700;
 }
 
 .card p {
-  margin: 6px 0;
-  color: #555;
+  margin: 8px 0;
+  color: #666;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.card .price {
+  color: #43a889;
+  font-weight: 700;
+  font-size: 18px;
+  margin: 12px 0;
+}
+
+.card .rating {
+  color: #f9c54e;
+  font-weight: 600;
+  font-size: 16px;
+  margin: 8px 0;
+}
+
+.card .rooms {
+  color: #91be6f;
+  font-weight: 600;
+  font-size: 16px;
+  margin: 8px 0;
+}
+
+.card-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 15px;
+  flex-wrap: wrap;
 }
 
 .card button {
-  margin: 8px 4px;
-  padding: 8px 12px;
+  padding: 10px 20px;
   border: none;
   border-radius: 6px;
-  background-color: #1976d2;
-  color: white;
-  cursor: pointer;
   font-size: 14px;
-  transition: background-color 0.3s ease;
+  font-weight: 600;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-.card button:hover {
-  background-color: #125a9c;
+.card .btn-rent {
+  background: #43a889;
+  color: white;
 }
-#results, #favoritesContainer {
+
+.card .btn-favorite {
+  background: #f9c54e;
+  color: #333;
+}
+
+.card .btn-favorite.favorited {
+  background: #56778f;
+  color: white;
+}
+
+.card .btn-details {
+  background: rgba(86, 119, 143, 0.1);
+  color: #56778f;
+  border: 1px solid rgba(86, 119, 143, 0.3);
+}
+
+#favoritesContainer {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 20px;
-  padding: 20px;
-  justify-items: center;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 25px;
+  padding: 20px 0;
+  margin-top: 20px;
 }
 
+.no-results {
+  text-align: center;
+  padding: 60px 20px;
+  color: #666;
+}
+
+.no-results h3 {
+  color: #56778f;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.no-results p {
+  font-size: 16px;
+  opacity: 0.8;
+}
+
+.loading {
+  text-align: center;
+  padding: 40px;
+  color: #43a889;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.room-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 8px 0;
+  cursor: pointer;
+}
+
+.room-checkbox input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #43a889;
+}
+
+.room-checkbox label {
+  color: #666;
+  font-weight: 500;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.star-rating {
+  color: #f9c54e;
+  font-size: 16px;
+  margin: 8px 0;
+}
+
+.star-rating .stars {
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.price-highlight {
+  background: rgba(67, 168, 137, 0.1);
+  color: #43a889;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: 700;
+}
+
+.availability-status {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 8px 0;
+}
+
+.availability-status.available {
+  background: rgba(145, 190, 111, 0.2);
+  color: #91be6f;
+}
+
+.availability-status.unavailable {
+  background: rgba(86, 119, 143, 0.2);
+  color: #56778f;
+}
+
+@media (max-width: 768px) {
+  .card {
+    max-width: 100%;
+    padding: 15px;
+  }
+  
+  .card img {
+    height: 200px;
+  }
+  
+  .card h3 {
+    font-size: 18px;
+  }
+  
+  .card-buttons {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .card button {
+    width: 100%;
+    padding: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    padding: 12px;
+  }
+  
+  .card img {
+    height: 180px;
+  }
+  
+  .card h3 {
+    font-size: 16px;
+  }
+  
+  .card p, .card .price, .card .rating, .card .rooms {
+    font-size: 14px;
+  }
+  
+  #favoritesContainer {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+}

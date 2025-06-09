@@ -3,73 +3,93 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title></title>
+    <title>Home - Amsterdam Rentals</title>
     <link rel="icon" href="images/icon.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="css/home.css" />
     <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/home.css" />
     <script src="js/data/amsterdam.js" defer></script>
   </head>
   <body>
-    <header>
+    <header class="main-header">
       <nav class="navbar">
-        <div class="nav-left">
-          <a href="index.html">Home</a>
-          <a href="rent.html">Rent</a>
-          <a href="favorites.html">Favorites</a>
-          <a href="mybookings.html">My Bookings</a>
+        <div class="nav-brand">
+          <span class="brand-text">Amsterdam Rentals</span>
         </div>
-        <div class="nav-right">
-          <span id="userName">Guest</span>
-          <button id="SignOut">Sign Out</button>
+        
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </button>
+        
+        <div class="nav-menu" id="navMenu">
+          <div class="nav-left">
+            <a href="index.html" class="nav-link active">Home</a>
+            <a href="rent.html" class="nav-link">Rent</a>
+            <a href="favorites.html" class="nav-link">Favorites</a>
+            <a href="mybookings.html" class="nav-link">My Bookings</a>
+          </div>
+          <div class="nav-right">
+            <span class="user-name" id="userName">Guest</span>
+            <button class="btn-signout" id="SignOut">Sign Out</button>
+          </div>
         </div>
       </nav>
     </header>
-    <section>
-      <h1>HOME</h1>
-      <div>
-        <h3 id="countRentals"></h3>
-      </div>
-    </section>
-    <section>
-      <div>
-        <div>
-          <h3>Min Rating</h3>
-          <select id="slctMinRating" name="Rating">
-            <option value="1">1 star</option>
-            <option value="2">2 stars</option>
-            <option value="3">3 stars</option>
-            <option value="4">4 stars</option>
-            <option value="5">5 stars</option>
-          </select>
-        </div>
 
-        <div>
-          <h3>Min Price</h3>
-          <input type="range" id="rngMinPrice"/>
-          <span id="displayMin"></span>
+    <main class="main-content">
+      <section class="page-header">
+        <h1 class="page-title">HOME</h1>
+        <div class="rentals-count">
+          <h3 id="countRentals"></h3>
         </div>
+      </section>
 
-        <div>
-          <h3>Max Price</h3>
-          <input
-            type="range"
-            id="rngMaxPrice"
-            min="0"
-            max="1000"
-            value="1000"
-          />
-          <span id="displayMax"></span>
+      <section class="filters-section">
+        <div class="filters-container">
+          <div class="filter-group">
+            <h3 class="filter-label">Min Rating</h3>
+            <select class="filter-select" id="slctMinRating" name="Rating">
+              <option value="1">1 star</option>
+              <option value="2">2 stars</option>
+              <option value="3">3 stars</option>
+              <option value="4">4 stars</option>
+              <option value="5">5 stars</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <h3 class="filter-label">Min Price</h3>
+            <input type="range" class="filter-range" id="rngMinPrice" min="0" max="1000" value="0" />
+            <span class="price-display" id="displayMin">0</span>
+          </div>
+
+          <div class="filter-group">
+            <h3 class="filter-label">Max Price</h3>
+            <input type="range" class="filter-range" id="rngMaxPrice" min="0" max="1000" value="1000" />
+            <span class="price-display" id="displayMax">1000</span>
+          </div>
+
+          <div class="filter-group" id="roomsContainer">
+            <h3 class="filter-label">Number of Rooms</h3>
+          </div>
+
+          <button type="button" class="btn-primary" id="filter">FILTER</button>
         </div>
+      </section>
 
-        <div id="roomsContainer">
-          <h3>Number of Rooms</h3>
-        </div>
+      <section class="results-section">
+        <div id="results" class="results-grid"></div>
+      </section>
+    </main>
 
-        <input type="button" id="filter" value="FILTER" />
-      </div>
-    </section>
+    <footer class="main-footer">
+      <p class="footer-text">&copy; 2025 Amsterdam Rentals. All rights reserved.</p>
+    </footer>
+
     <script src="js/storage.js"></script>
     <script src="js/favorites.js"></script>
     <script src="js/listing.js"></script>
+    <script src="js/utils.js"></script>
   </body>
 </html>
