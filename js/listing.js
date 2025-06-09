@@ -3,7 +3,6 @@ document.addEventListener("DOMContentLoaded", function () {
   const rentals = amsterdam;
 //#region מספר חדרים
   const countHeader = document.getElementById("countRentals");
-  //אולי נכון להוסיף את totatlHeader ב html? סתם כי הוא תמיד מופיעה
   const totalHeader = document.createElement("h4");
   totalHeader.textContent =
     "There are " + rentals.length + " rentals available in total";
@@ -41,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 //#endregion
 //#region מינימום מקסימום  
-const displayMin = document.getElementById("displayMin");
+  const displayMin = document.getElementById("displayMin");
   const displayMax = document.getElementById("displayMax");
   const rngMin = document.getElementById("rngMinPrice");
   const rngMax = document.getElementById("rngMaxPrice");
@@ -82,10 +81,6 @@ displayMax.textContent = rngMax.value  + '$';
 //#endregion
   
 //#region תוצאות
-const resultsSection = document.createElement("section");
-  resultsSection.id = "results";
-  document.body.appendChild(resultsSection);
-
  function displayResults(filtered) {
   const resultsSection = document.getElementById("results");
   resultsSection.innerHTML = "";
@@ -94,8 +89,8 @@ const resultsSection = document.createElement("section");
   let favorites = [];
 
   if (currentUser) {
-    const key = currentUser.name + "_favorites";
-    favorites = JSON.parse(localStorage.getItem(key)) || [];
+    const keyFavorites = currentUser.name + "_favorites";
+    favorites = JSON.parse(localStorage.getItem(keyFavorites)) || [];
   }
 
   filtered.forEach(function (listing) {
@@ -167,6 +162,12 @@ sortedRatings.forEach(rating => {
     const minPrice = parseInt(rngMin.value);
     const maxPrice = parseInt(rngMax.value);
     const selectedRooms = roomSelect.value;
+
+    if(minPrice>maxPrice)
+    {
+        alert("The minimun price can't be larger than the maximum price filtered");
+        return;
+    }
 
     const filtered = rentals.filter(function (r) {
       const rating = parseInt(r.review_scores_rating || 0);
