@@ -62,20 +62,68 @@ if (!selectedApt) {
   container.innerHTML = "<p>Apartment not found.</p>";
 } else {
   container.innerHTML = `
-    <img src="${selectedApt.picture_url}" alt="Apartment image" class="apartment-image">
+    <img src="${
+      selectedApt.picture_url
+    }" alt="Apartment image" class="apartment-image">
     <h2>${selectedApt.name}</h2>
     <p><strong>Description:</strong> ${selectedApt.description}</p>
     <p><strong>Price:</strong> $${selectedApt.price} per night</p>
-    <p><strong>Rating:</strong> ${selectedApt.review_scores_rating || "No rating available"}</p>
+    <p><strong>Rating:</strong> ${
+      selectedApt.review_scores_rating || "No rating available"
+    }</p>
   `;
 }
-const bookingsKey = currentUser.username + "_bookings";
+function getUnavailableDates(listingId) {
+  const unavailable = [];
+
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (key.endsWith("_bookings")) {
+      const bookings = JSON.parse(localStorage.getItem(key)) || [];
+      bookings.forEach(function (booking) {
+        if (booking.listingId == listingId) {
+          let current = new Date(booking.startDate);
+          const end = new Date(booking.endDate);
+
+          while (current <= end) {
+            const iso = current.toISOString().split("T")[0];
+            unavailable.push(iso);
+            current.setDate(current.getDate() + 1);
+          }
+        }
+      });
+    }
+  }
+
+  return unavailable;
+}
+
+function disableDates(input, unavailableDates) {
+  input.addEventListener("input", function () {
+    const selected = input.value;
+    if (unavailableDates.includes(selected)) {
+      alert("This date is already booked. Please choose another.");
+      input.value = "";
+    }
+  });
+}
 
 const rentForm = document.getElementById("rentForm");
 const startInput = document.getElementById("startDate");
 const endInput = document.getElementById("endDate");
 const ccInput = document.getElementById("ccNumber");
 const message = document.getElementById("bookingMessage");
+
+const bookingsKey = currentUser.username + "_bookings";
+const unavailableDates = getUnavailableDates(listingId);
+disableDates(startInput, unavailableDates);
+disableDates(endInput, unavailableDates);
+
+ccInput.addEventListener("input", function () {
+  let rawValue = ccInput.value.replace(/\D/g, "").slice(0, 16);
+  let formattedValue = rawValue.match(/.{1,4}/g)?.join(" ") || "";
+  ccInput.value = formattedValue;
+});
 
 // --- ולידציה חיה בזמן בחירת תאריכים ---
 function validateDatesLive() {
@@ -122,6 +170,13 @@ rentForm.addEventListener("submit", function (event) {
 
   // אם יש שגיאת ולידציה פעילה – לא נתקדם
   if (message.textContent !== "") return;
+  const cleanCC = ccNumber.replace(/\s/g, ""); 
+
+  if (!/^\d{16}$/.test(cleanCC)) {
+    message.textContent = "Please enter a valid 16-digit credit card number.";
+    message.style.color = "red";
+    return;
+  }
 
   const isAvailable = checkAvailability(listingId, startDate, endDate);
   if (!isAvailable) {
@@ -133,7 +188,7 @@ rentForm.addEventListener("submit", function (event) {
   const newBooking = {
     listingId: listingId,
     startDate: startDate,
-    endDate: endDate
+    endDate: endDate,
   };
 
   const previousBookings = JSON.parse(localStorage.getItem(bookingsKey)) || [];
@@ -145,8 +200,10 @@ rentForm.addEventListener("submit", function (event) {
   rentForm.reset();
 
   setTimeout(function () {
-  if (confirm("Your booking was saved! Would you like to view your bookings?")) {
-    window.location.href = "mybookings.html";
-  }
-}, 300);
+    if (
+      confirm("Your booking was saved! Would you like to view your bookings?")
+    ) {
+      window.location.href = "mybookings.html";
+    }
+  }, 300);
 });
