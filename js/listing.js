@@ -49,7 +49,7 @@ let highestPrice = 0;
 let lowestPrice = Infinity;
 for(const rent of rentals)
 {
-  let cleanPrice = rent.price.replace("$","").trim();
+  let cleanPrice = rent.price.replace(",","").replace("$","").trim();
   let numPrice = parseFloat(cleanPrice);
   if(highestPrice<numPrice)
   {
@@ -171,7 +171,7 @@ sortedRatings.forEach(function(rating) {
 
     const filtered = rentals.filter(function (r) {
       const rating = parseInt(r.review_scores_rating || 0);
-      const price = parseFloat(r.price.replace("$", ""));
+  let cleanPrice = rent.price.replace(",","").replace("$","").trim();
       const rooms = r.bedrooms;
       return (
         rating >= minRating &&
