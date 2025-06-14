@@ -49,7 +49,7 @@ let highestPrice = 0;
 let lowestPrice = Infinity;
 for(const rent of rentals)
 {
-  let cleanPrice = rent.price.trim().replace("$","");
+  let cleanPrice = rent.price.replace("$","").trim();
   let numPrice = parseFloat(cleanPrice);
   if(highestPrice<numPrice)
   {
