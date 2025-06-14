@@ -115,11 +115,11 @@ sortedRatings.forEach(function(rating) {
   let favorites = [];
 
   if (currentUser) {
-    const keyFavorites = currentUser.name + "_favorites";
+    const keyFavorites =  "favorites_" + currentUser.name;
     favorites = JSON.parse(localStorage.getItem(keyFavorites)) || [];
   }
 
-  filtered.forEach(function (listing) {
+  filtered.forEach(function   (listing) {
     const card = document.createElement("div");
     card.className = "card";
 

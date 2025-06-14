@@ -6,7 +6,7 @@ function toggleFavorite(button, listingId) {
     return;
   }
 
-  const key = currentUser.name + "_favorites";
+  const key =  "favorites_" + currentUser.name;
   let favorites = JSON.parse(localStorage.getItem(key)) || [];
 
   listingId = Number(listingId);
@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
     return;
   }
 
-  const key = currentUser.name + "_favorites";
+  const key =  "favorites_" + currentUser.name;
   const favoriteIds = JSON.parse(localStorage.getItem(key)) || [];
 
   const favoritesContainer = document.getElementById("favoritesContainer");
