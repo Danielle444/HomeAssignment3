@@ -126,31 +126,16 @@ sortedRatings.forEach(function(rating) {
     const isFav = favorites.includes(Number(listing.listing_id));
     const favText = isFav ? "Remove from Favorites" : "Add to Favorites";
 
-    card.innerHTML =
-      '<img src="' +
-      listing.picture_url +
-      '" alt="' +
-      listing.name +
-      '" />' +
-      "<h3>" +
-      listing.name +
-      "</h3>" +
-      "<p>" +
-      listing.description +
-      "</p>" +
-      "<p><strong>Price:</strong> $" +
-      listing.price +
-      " | <strong>Rating:</strong> " +
-      listing.review_scores_rating +
-      "</p>" +
-      "<button onclick=\"location.href='rent.html?listingId=" +
-      listing.listing_id +
-      "'\">Rent</button>" +
-      '<button onclick="toggleFavorite(this, ' +
-      listing.listing_id +
-      ')">' +
-      favText +
-      "</button>";
+        card.innerHTML = `
+            <img src="${listing.picture_url}" alt="${listing.name}" />
+            <h3>${listing.name}</h3>
+            <h5>${listing.listing_id}</h5>
+            <a href="${listing.listing_url}">${listing.listing_url}</a>
+            <p>${listing.description}</p>
+            <p><strong>Price:</strong> $${listing.price} | <strong>Rating:</strong> ${listing.review_scores_rating}</p>
+            <button onclick="location.href='rent.html?listingId=${listing.listing_id}'">Rent</button>
+            <button onclick="toggleFavorite(this, ${listing.listing_id})">${favText}</button>
+        `;
 
     resultsSection.appendChild(card);
   });
@@ -171,7 +156,7 @@ sortedRatings.forEach(function(rating) {
 
     const filtered = rentals.filter(function (r) {
       const rating = parseInt(r.review_scores_rating || 0);
-  let cleanPrice = rent.price.replace(",","").replace("$","").trim();
+      const price = parseFloat(r.price.replace(",","").replace("$","").trim());
       const rooms = r.bedrooms;
       return (
         rating >= minRating &&
