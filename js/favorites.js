@@ -6,7 +6,7 @@ function toggleFavorite(button, listingId) {
     return;
   }
 
-  const key = currentUser.name + "_favorites";
+  const key =  "favorites_" + currentUser.name;
   let favorites = JSON.parse(localStorage.getItem(key)) || [];
 
   listingId = Number(listingId);
@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
     return;
   }
 
-  const key = currentUser.name + "_favorites";
+  const key =  "favorites_" + currentUser.name;
   const favoriteIds = JSON.parse(localStorage.getItem(key)) || [];
 
   const favoritesContainer = document.getElementById("favoritesContainer");
@@ -63,27 +63,16 @@ document.addEventListener("DOMContentLoaded", function () {
     const card = document.createElement("div");
     card.className = "card";
 
-    card.innerHTML =
-      '<img src="' +
-      listing.picture_url +
-      '" alt="' +
-      listing.name +
-      '" />' +
-      "<h3>" +
-      listing.name +
-      "</h3>" +
-      "<p>" +
-      listing.description +
-      "</p>" +
-      "<p><strong>Price:</strong> $" +
-      listing.price +
-      " | <strong>Rating:</strong> " +
-      listing.review_scores_rating +
-      "</p>" +
-      '<button onclick="toggleFavorite(this, ' +
-      listing.listing_id +
-      ')">Remove from Favorites</button>';
-
+            card.innerHTML = `
+            <img src="${listing.picture_url}" alt="${listing.name}" />
+            <h3>${listing.name}</h3>
+            <h5>${listing.listing_id}</h5>
+            <a href="${listing.listing_url}">${listing.listing_url}</a>
+            <p>${listing.description}</p>
+            <p><strong>Price:</strong> $${listing.price} | <strong>Rating:</strong> ${listing.review_scores_rating}</p>
+            <button onclick="location.href='rent.html?listingId=${listing.listing_id}'">Rent</button>
+            <button onclick="toggleFavorite(this, ${listing.listing_id})">Remove From Favorites</button>
+        `;
     favoritesContainer.appendChild(card);
   });
 });

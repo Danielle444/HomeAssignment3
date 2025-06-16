@@ -49,7 +49,7 @@ let highestPrice = 0;
 let lowestPrice = Infinity;
 for(const rent of rentals)
 {
-  let cleanPrice = rent.price.trim().replace("$","");
+  let cleanPrice = rent.price.replace(",","").replace("$","").trim();
   let numPrice = parseFloat(cleanPrice);
   if(highestPrice<numPrice)
   {
@@ -115,48 +115,33 @@ sortedRatings.forEach(function(rating) {
   let favorites = [];
 
   if (currentUser) {
-    const keyFavorites = currentUser.name + "_favorites";
+    const keyFavorites =  "favorites_" + currentUser.name;
     favorites = JSON.parse(localStorage.getItem(keyFavorites)) || [];
   }
 
-  filtered.forEach(function (listing) {
+  filtered.forEach(function   (listing) {
     const card = document.createElement("div");
     card.className = "card";
 
     const isFav = favorites.includes(Number(listing.listing_id));
     const favText = isFav ? "Remove from Favorites" : "Add to Favorites";
 
-    card.innerHTML =
-      '<img src="' +
-      listing.picture_url +
-      '" alt="' +
-      listing.name +
-      '" />' +
-      "<h3>" +
-      listing.name +
-      "</h3>" +
-      "<p>" +
-      listing.description +
-      "</p>" +
-      "<p><strong>Price:</strong> $" +
-      listing.price +
-      " | <strong>Rating:</strong> " +
-      listing.review_scores_rating +
-      "</p>" +
-      "<button onclick=\"location.href='rent.html?listingId=" +
-      listing.listing_id +
-      "'\">Rent</button>" +
-      '<button onclick="toggleFavorite(this, ' +
-      listing.listing_id +
-      ')">' +
-      favText +
-      "</button>";
+        card.innerHTML = `
+            <img src="${listing.picture_url}" alt="${listing.name}" />
+            <h3>${listing.name}</h3>
+            <h5>${listing.listing_id}</h5>
+            <a href="${listing.listing_url}">${listing.listing_url}</a>
+            <p>${listing.description}</p>
+            <p><strong>Price:</strong> $${listing.price} | <strong>Rating:</strong> ${listing.review_scores_rating}</p>
+            <button onclick="location.href='rent.html?listingId=${listing.listing_id}'">Rent</button>
+            <button onclick="toggleFavorite(this, ${listing.listing_id})">${favText}</button>
+        `;
 
     resultsSection.appendChild(card);
   });
 }
 
-
+//#region פילטר
   function filterRentals() {
     const minRating = parseInt(ratingSelect.value)
     const minPrice = parseInt(rngMin.value);
@@ -171,7 +156,7 @@ sortedRatings.forEach(function(rating) {
 
     const filtered = rentals.filter(function (r) {
       const rating = parseInt(r.review_scores_rating || 0);
-      const price = parseFloat(r.price.replace("$", ""));
+      const price = parseFloat(r.price.replace(",","").replace("$","").trim());
       const rooms = r.bedrooms;
       return (
         rating >= minRating &&
@@ -184,7 +169,9 @@ sortedRatings.forEach(function(rating) {
     countHeader.textContent = "Found " + filtered.length + " rentals";
     displayResults(filtered);
   }
+    document.getElementById("filter").addEventListener("click", filterRentals);
+
+  //#endregion
 //#endregion
-  document.getElementById("filter").addEventListener("click", filterRentals);
 });
 
