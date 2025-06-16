@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   console.log(amsterdam);
   const rentals = amsterdam;
-//#region מספר חדרים
+  //#region מספר חדרים
   const countHeader = document.getElementById("countRentals");
   const totalHeader = document.createElement("h4");
   totalHeader.textContent =
@@ -38,95 +38,88 @@ document.addEventListener("DOMContentLoaded", function () {
     opt.textContent = num + " rooms";
     roomSelect.appendChild(opt);
   });
-//#endregion
-//#region מינימום מקסימום  
+  //#endregion
+  //#region מינימום מקסימום
   const displayMin = document.getElementById("displayMin");
   const displayMax = document.getElementById("displayMax");
   const rngMin = document.getElementById("rngMinPrice");
   const rngMax = document.getElementById("rngMaxPrice");
 
-let highestPrice = 0;
-let lowestPrice = Infinity;
-for(const rent of rentals)
-{
-  let cleanPrice = rent.price.replace(",","").replace("$","").trim();
-  let numPrice = parseFloat(cleanPrice);
-  if(highestPrice<numPrice)
-  {
-    highestPrice = numPrice;
+  let highestPrice = 0;
+  let lowestPrice = Infinity;
+  for (const rent of rentals) {
+    let cleanPrice = rent.price.replace(",", "").replace("$", "").trim();
+    let numPrice = parseFloat(cleanPrice);
+    if (highestPrice < numPrice) {
+      highestPrice = numPrice;
+    }
+    if (lowestPrice > numPrice) {
+      lowestPrice = numPrice;
+    }
   }
-  if(lowestPrice>numPrice)
-  {
-    lowestPrice = numPrice;
-  }
-}
 
-rngMin.min = lowestPrice;
-rngMin.max = highestPrice;
-rngMin.value = lowestPrice;
-displayMin.textContent = rngMin.value + '$';
+  rngMin.min = lowestPrice;
+  rngMin.max = highestPrice;
+  rngMin.value = lowestPrice;
+  displayMin.textContent = rngMin.value + "$";
 
-rngMax.min = lowestPrice;
-rngMax.max = highestPrice;
-rngMax.value = highestPrice;
-displayMax.textContent = rngMax.value  + '$';
+  rngMax.min = lowestPrice;
+  rngMax.max = highestPrice;
+  rngMax.value = highestPrice;
+  displayMax.textContent = rngMax.value + "$";
 
   rngMin.addEventListener("input", function () {
-    displayMin.textContent = rngMin.value + '$';
+    displayMin.textContent = rngMin.value + "$";
   });
 
   rngMax.addEventListener("input", function () {
-    displayMax.textContent = rngMax.value  + '$';
+    displayMax.textContent = rngMax.value + "$";
   });
-//#endregion
-//#region דירוג
-const ratingSelect = document.getElementById("slctMinRating");
-ratingSelect.innerHTML = "";
+  //#endregion
+  //#region דירוג
+  const ratingSelect = document.getElementById("slctMinRating");
+  ratingSelect.innerHTML = "";
 
-const ratingOptions = new Set();
+  const ratingOptions = new Set();
 
-rentals.forEach(function(r) {
-  const rating = parseInt(r.review_scores_rating);
-  if (!isNaN(rating)) {
-    ratingOptions.add(rating);
-  }
-});
+  rentals.forEach(function (r) {
+    const rating = parseInt(r.review_scores_rating);
+    if (!isNaN(rating)) {
+      ratingOptions.add(rating);
+    }
+  });
 
-const sortedRatings = Array.from(ratingOptions).sort((a, b) => a - b);
+  const sortedRatings = Array.from(ratingOptions).sort((a, b) => a - b);
 
-const defaultOpt = document.createElement("option");
-defaultOpt.value = 0;
-defaultOpt.textContent = "Any";
-ratingSelect.appendChild(defaultOpt);
+  const defaultOpt = document.createElement("option");
+  defaultOpt.value = 0;
+  defaultOpt.textContent = "Any";
+  ratingSelect.appendChild(defaultOpt);
 
-sortedRatings.forEach(function(rating) {
-  const opt = document.createElement("option");
-  opt.value = rating;
-  opt.textContent = rating + (rating > 1 ? " stars" : " star");
-  ratingSelect.appendChild(opt);
-});
-//#endregion
-//#region תוצאות
- function displayResults(filtered) {
-  const resultsSection = document.getElementById("results");
-  resultsSection.innerHTML = "";
-//שיניתי את ה "currentUser" למשתנה key
-  const currentUser = JSON.parse(localStorage.getItem(keyCurrentUser));
-  let favorites = [];
+  sortedRatings.forEach(function (rating) {
+    const opt = document.createElement("option");
+    opt.value = rating;
+    opt.textContent = rating + (rating > 1 ? " stars" : " star");
+    ratingSelect.appendChild(opt);
+  });
+  //#endregion
+  //#region תוצאות
+  function displayResults(filtered) {
+    const resultsSection = document.getElementById("results");
+    resultsSection.innerHTML = "";
+    //שיניתי את ה "currentUser" למשתנה key
+    const currentUser = getCurrentUserOrRedirect();
+    const favoritesKey = getUserFavoritesKey(currentUser);
+    const favorites = JSON.parse(localStorage.getItem(favoritesKey)) || [];
 
-  if (currentUser) {
-    const keyFavorites =  "favorites_" + currentUser.name;
-    favorites = JSON.parse(localStorage.getItem(keyFavorites)) || [];
-  }
+    filtered.forEach(function (listing) {
+      const card = document.createElement("div");
+      card.className = "card";
 
-  filtered.forEach(function   (listing) {
-    const card = document.createElement("div");
-    card.className = "card";
+      const isFav = favorites.includes(Number(listing.listing_id));
+      const favText = isFav ? "Remove from Favorites" : "Add to Favorites";
 
-    const isFav = favorites.includes(Number(listing.listing_id));
-    const favText = isFav ? "Remove from Favorites" : "Add to Favorites";
-
-        card.innerHTML = `
+      card.innerHTML = `
             <img src="${listing.picture_url}" alt="${listing.name}" />
             <h3>${listing.name}</h3>
             <h5>${listing.listing_id}</h5>
@@ -137,26 +130,29 @@ sortedRatings.forEach(function(rating) {
             <button onclick="toggleFavorite(this, ${listing.listing_id})">${favText}</button>
         `;
 
-    resultsSection.appendChild(card);
-  });
-}
+      resultsSection.appendChild(card);
+    });
+  }
 
-//#region פילטר
+  //#region פילטר
   function filterRentals() {
-    const minRating = parseInt(ratingSelect.value)
+    const minRating = parseInt(ratingSelect.value);
     const minPrice = parseInt(rngMin.value);
     const maxPrice = parseInt(rngMax.value);
     const selectedRooms = roomSelect.value;
 
-    if(minPrice>maxPrice)
-    {
-        alert("The minimun price can't be larger than the maximum price filtered");
-        return;
+    if (minPrice > maxPrice) {
+      alert(
+        "The minimun price can't be larger than the maximum price filtered"
+      );
+      return;
     }
 
     const filtered = rentals.filter(function (r) {
       const rating = parseInt(r.review_scores_rating || 0);
-      const price = parseFloat(r.price.replace(",","").replace("$","").trim());
+      const price = parseFloat(
+        r.price.replace(",", "").replace("$", "").trim()
+      );
       const rooms = r.bedrooms;
       return (
         rating >= minRating &&
@@ -169,9 +165,8 @@ sortedRatings.forEach(function(rating) {
     countHeader.textContent = "Found " + filtered.length + " rentals";
     displayResults(filtered);
   }
-    document.getElementById("filter").addEventListener("click", filterRentals);
+  document.getElementById("filter").addEventListener("click", filterRentals);
 
   //#endregion
-//#endregion
+  //#endregion
 });
-
