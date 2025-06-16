@@ -114,7 +114,8 @@ const endInput = document.getElementById("endDate");
 const ccInput = document.getElementById("ccNumber");
 const message = document.getElementById("bookingMessage");
 
-const bookingsKey = currentUser.username + "_bookings";
+const currentUser = getCurrentUserOrRedirect();
+const bookingsKey = getUserBookingsKey(currentUser);
 const unavailableDates = getUnavailableDates(listingId);
 disableDates(startInput, unavailableDates);
 disableDates(endInput, unavailableDates);

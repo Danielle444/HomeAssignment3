@@ -1,13 +1,10 @@
 // ניהול מועדפים לפי currentUser
-function toggleFavorite(button, listingId) {
-  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-  if (!currentUser) {
-    alert("Please log in to use favorites.");
-    return;
-  }
 
-  const key =  "favorites_" + currentUser.name;
-  let favorites = JSON.parse(localStorage.getItem(key)) || [];
+const currentUser = getCurrentUserOrRedirect();
+const favoritesKey = getUserFavoritesKey(currentUser);
+
+function toggleFavorite(button, listingId) {
+  let favorites = JSON.parse(localStorage.getItem(favoritesKey)) || [];
 
   listingId = Number(listingId);
   const index = favorites.indexOf(listingId);
@@ -20,31 +17,22 @@ function toggleFavorite(button, listingId) {
     button.textContent = "Add to Favorites";
   }
 
-  localStorage.setItem(key, JSON.stringify(favorites));
+  localStorage.setItem(favoritesKey, JSON.stringify(favorites));
 
   if (window.location.href.includes("favorites.html")) {
     location.reload();
   }
 }
 
-
-
 document.addEventListener("DOMContentLoaded", function () {
-  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-  if (!currentUser) {
-    window.location.href = "login.html";
-    return;
-  }
-
-  const key =  "favorites_" + currentUser.name;
-  const favoriteIds = JSON.parse(localStorage.getItem(key)) || [];
+  const favoriteIds = JSON.parse(localStorage.getItem(favoritesKey)) || [];
 
   const favoritesContainer = document.getElementById("favoritesContainer");
   if (!favoritesContainer) return;
 
-
   if (typeof amsterdam === "undefined") {
-    favoritesContainer.innerHTML = "<p>Data not loaded. Please try again later.</p>";
+    favoritesContainer.innerHTML =
+      "<p>Data not loaded. Please try again later.</p>";
     return;
   }
 
@@ -57,13 +45,13 @@ document.addEventListener("DOMContentLoaded", function () {
     return;
   }
 
-  favoritesContainer.innerHTML = ""; 
+  favoritesContainer.innerHTML = "";
 
   favoriteRentals.forEach(function (listing) {
     const card = document.createElement("div");
     card.className = "card";
 
-            card.innerHTML = `
+    card.innerHTML = `
             <img src="${listing.picture_url}" alt="${listing.name}" />
             <h3>${listing.name}</h3>
             <h5>${listing.listing_id}</h5>
