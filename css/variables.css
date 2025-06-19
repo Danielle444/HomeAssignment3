@@ -1,3 +1,30 @@
 :root {
-
+  --bg-primary: #F5F7FA;
+  --bg-secondary: #FFFFFF;
+  --color-primary: #1F4E79;
+  --color-accent: #8ABF90;
+  --color-text: #2E2E2E;
+  --color-text-light: #666666;
+  
+  --btn-primary-bg: #1F4E79;
+  --btn-primary-text: #FFFFFF;
+  --btn-secondary-bg: #8ABF90;
+  --btn-secondary-text: #2E2E2E;
+  
+  --input-bg: #FFFFFF;
+  --input-border: #E0E7FF;
+  --input-border-focus: #1F4E79;
+  --input-text: #2E2E2E;
+  --input-placeholder: #999999;
+  
+  --card-bg: #FFFFFF;
+  --card-shadow: 0 4px 15px rgba(31, 78, 121, 0.1);
+  --card-border: rgba(31, 78, 121, 0.1);
+  
+  --success-color: #8ABF90;
+  --error-color: #E74C3C;
+  --warning-color: #F39C12;
+  
+  --hover-shadow: 0 8px 25px rgba(31, 78, 121, 0.15);
+  --hover-transform: translateY(-3px);
 }
