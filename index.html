@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Home - Amsterdam Rentals</title>
     <link rel="icon" href="images/icon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="css/variables.css" />
     <link rel="stylesheet" href="css/main.css" />
     <link rel="stylesheet" href="css/home.css" />
-    <script src="js/data/amsterdam.js" defer></script>
   </head>
   <body>
     <header class="main-header">
@@ -37,14 +37,25 @@
     </header>
 
     <main class="main-content">
-      <section class="page-header">
-        <h1 class="page-title">HOME</h1>
-        <div class="rentals-count">
-          <h3 id="countRentals"></h3>
+      <section class="hero-section">
+        <div class="hero-content">
+          <h1 class="page-title">Discover Amsterdam</h1>
+          <p class="hero-subtitle">Find your perfect rental in the heart of the Netherlands</p>
+          <div class="rentals-count">
+            <h3 id="countRentals">Loading amazing properties...</h3>
+          </div>
+        </div>
+        <div class="hero-image">
+          <img src="images/Bird-Eye.jpg" alt="Beautiful Amsterdam canal view" class="amsterdam-image" />
         </div>
       </section>
 
       <section class="filters-section">
+        <div class="section-header">
+          <h2>Find Your Perfect Stay</h2>
+          <p>Use our filters to discover exactly what you're looking for</p>
+        </div>
+        
         <div class="filters-container">
           <div class="filter-group">
             <h3 class="filter-label">Min Rating</h3>
@@ -55,35 +66,43 @@
           <div class="filter-group">
             <h3 class="filter-label">Min Price</h3>
             <input type="range" class="filter-range" id="rngMinPrice" min="0" max="1000" value="0" />
-            <span class="price-display" id="displayMin">0</span>
+            <span class="price-display" id="displayMin">€0</span>
           </div>
 
           <div class="filter-group">
             <h3 class="filter-label">Max Price</h3>
             <input type="range" class="filter-range" id="rngMaxPrice" min="0" max="1000" value="1000" />
-            <span class="price-display" id="displayMax">1000</span>
+            <span class="price-display" id="displayMax">€1000</span>
           </div>
 
           <div class="filter-group" id="roomsContainer">
             <h3 class="filter-label">Number of Rooms</h3>
           </div>
 
-          <button type="button" class="btn-primary" id="filter">FILTER</button>
+          <button type="button" class="btn-primary" id="filter">
+            <span>SEARCH PROPERTIES</span>
+          </button>
         </div>
       </section>
 
       <section class="results-section">
+        <div class="section-header">
+          <h2>Available Properties</h2>
+          <p>Handpicked accommodations for your Amsterdam adventure</p>
+        </div>
         <div id="results" class="results-grid"></div>
       </section>
     </main>
 
     <footer class="main-footer">
-      <p class="footer-text">&copy; 2025 Amsterdam Rentals. All rights reserved.</p>
+      <div class="footer-bottom">
+        <p>&copy; 2025 Amsterdam Rentals. All rights reserved.</p>
+      </div>
     </footer>
 
+    <script src="js/data/amsterdam.js" defer></script>
     <script src="js/storage.js"></script>
     <script src="js/favorites.js"></script>
     <script src="js/listing.js"></script>
-    <script src="js/utils.js"></script>
   </body>
 </html>

@@ -1,17 +1,17 @@
-// פונקציות כלליות לעבודה עם localStorage
 const keyCurrentUser = "currentUser";
 
 function getCurrentUserOrRedirect() {
   const currentUser = JSON.parse(localStorage.getItem(keyCurrentUser));
   if (!currentUser) {
     window.location.href = "login.html";
+    return null;
   }
   return currentUser;
 }
 
 function setUserNameUI(user) {
   const nameP = document.getElementById("userName");
-  if (nameP) {
+  if (nameP && user) {
     nameP.textContent = user.name;
   }
 }
@@ -32,3 +32,12 @@ if (signOutBtn) {
   });
 }
 
+document.addEventListener("DOMContentLoaded", function() {
+  const userNameElement = document.getElementById("userName");
+  if (userNameElement) {
+    const currentUser = getCurrentUserOrRedirect();
+    if (currentUser) {
+      setUserNameUI(currentUser);
+    }
+  }
+});

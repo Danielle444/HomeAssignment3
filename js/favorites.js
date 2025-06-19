@@ -1,7 +1,19 @@
-// ניהול מועדפים לפי currentUser
-
 const currentUser = getCurrentUserOrRedirect();
 const favoritesKey = getUserFavoritesKey(currentUser);
+
+document.addEventListener("DOMContentLoaded", function () {
+  const navToggle = document.getElementById('navToggle');
+  const navMenu = document.getElementById('navMenu');
+  
+  if (navToggle && navMenu) {
+    navToggle.addEventListener('click', function() {
+      navToggle.classList.toggle('active');
+      navMenu.classList.toggle('active');
+    });
+  }
+  
+  loadFavorites();
+});
 
 function toggleFavorite(button, listingId) {
   let favorites = JSON.parse(localStorage.getItem(favoritesKey)) || [];
@@ -11,28 +23,29 @@ function toggleFavorite(button, listingId) {
 
   if (index === -1) {
     favorites.push(listingId);
-    button.textContent = "Remove from Favorites";
+    button.className = "card-btn btn-favorite favorited";
+    button.setAttribute('aria-label', 'Remove from favorites');
   } else {
     favorites.splice(index, 1);
-    button.textContent = "Add to Favorites";
+    button.className = "card-btn btn-favorite";
+    button.setAttribute('aria-label', 'Add to favorites');
   }
 
   localStorage.setItem(favoritesKey, JSON.stringify(favorites));
 
   if (window.location.href.includes("favorites.html")) {
-    location.reload();
+    loadFavorites();
   }
 }
 
-document.addEventListener("DOMContentLoaded", function () {
+function loadFavorites() {
   const favoriteIds = JSON.parse(localStorage.getItem(favoritesKey)) || [];
-
   const favoritesContainer = document.getElementById("favoritesContainer");
+
   if (!favoritesContainer) return;
 
   if (typeof amsterdam === "undefined") {
-    favoritesContainer.innerHTML =
-      "<p>Data not loaded. Please try again later.</p>";
+    favoritesContainer.innerHTML = "<p class='no-favorites-message'>Data not loaded. Please try again later.</p>";
     return;
   }
 
@@ -41,7 +54,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   if (favoriteRentals.length === 0) {
-    favoritesContainer.innerHTML = "<p>You have no favorite rentals.</p>";
+    favoritesContainer.innerHTML = "<p class='no-favorites-message'>You have no favorite rentals.</p>";
     return;
   }
 
@@ -51,16 +64,39 @@ document.addEventListener("DOMContentLoaded", function () {
     const card = document.createElement("div");
     card.className = "card";
 
+    const rating = listing.review_scores_rating ? 
+      Math.round(listing.review_scores_rating / 20) : 0;
+    const stars = "★".repeat(rating) + "☆".repeat(5 - rating);
+
     card.innerHTML = `
-            <img src="${listing.picture_url}" alt="${listing.name}" />
-            <h3>${listing.name}</h3>
-            <h5>${listing.listing_id}</h5>
-            <a href="${listing.listing_url}">${listing.listing_url}</a>
-            <p>${listing.description}</p>
-            <p><strong>Price:</strong> $${listing.price} | <strong>Rating:</strong> ${listing.review_scores_rating}</p>
-            <button onclick="location.href='rent.html?listingId=${listing.listing_id}'">Rent</button>
-            <button onclick="toggleFavorite(this, ${listing.listing_id})">Remove From Favorites</button>
-        `;
+      <div class="card-image-container">
+        <img src="${listing.picture_url}" alt="${listing.name}" loading="lazy" />
+      </div>
+      <div class="card-content">
+        <div class="card-header">
+          <h3>${listing.name}</h3>
+        </div>
+        <a href="${listing.listing_url}" class="card-url" target="_blank" rel="noopener">View Original Listing</a>
+        <p class="card-description">${listing.description}</p>
+        <div class="card-details">
+          <div class="detail-item">
+            <div class="detail-label">Price per night</div>
+            <div class="detail-value price-value">$${listing.price}</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Rating</div>
+            <div class="detail-value rating-value">
+              <span class="rating-stars">${stars}</span>
+              <span>${listing.review_scores_rating || 'N/A'}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-actions">
+        <button onclick="location.href='rent.html?listingId=${listing.listing_id}'" class="card-btn btn-rent">Book Now</button>
+        <button onclick="toggleFavorite(this, ${listing.listing_id})" class="card-btn btn-favorite"></button>
+      </div>
+    `;
     favoritesContainer.appendChild(card);
   });
-});
+}

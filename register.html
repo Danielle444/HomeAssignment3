@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Register - Amsterdam Rentals</title>
     <link rel="icon" href="images/icon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="css/variables.css" />
     <link rel="stylesheet" href="css/auth.css" />
   </head>
   <body class="register-page">
@@ -20,15 +21,17 @@
           
           <div class="input-group">
             <label for="signupUserName">Username</label>
-            <input type="text" id="signupUserName" class="form-input" placeholder="Choose a username" />
+            <input type="text" id="signupUserName" class="form-input" placeholder="Choose a username (min 8 chars)" />
           </div>
           
           <div class="input-group">
             <label for="signupPassword">Password</label>
-            <input type="password" id="signupPassword" class="form-input" placeholder="Create a password" />
+            <input type="password" id="signupPassword" class="form-input" placeholder="Create a password (min 8 chars)" />
           </div>
           
-          <button type="button" id="btnSignup" class="btn btn-primary">SIGN UP</button>
+          <button type="button" id="btnSignup" class="btn btn-primary">
+            <span>SIGN UP</span>
+          </button>
         </div>
         
         <div class="redirect-section">
@@ -36,7 +39,9 @@
             Already registered?<br />
             Sign in here
           </h3>
-          <button type="button" id="btnGoToLogin" class="btn btn-secondary">SIGN IN</button>
+          <button type="button" id="btnGoToLogin" class="btn btn-secondary">
+            <span>SIGN IN</span>
+          </button>
         </div>
       </div>
     </div>

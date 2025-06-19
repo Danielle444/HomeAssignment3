@@ -1,18 +1,28 @@
 document.addEventListener("DOMContentLoaded", function () {
   console.log(amsterdam);
   const rentals = amsterdam;
-  //#region מספר חדרים
+  
+  const navToggle = document.getElementById('navToggle');
+  const navMenu = document.getElementById('navMenu');
+  
+  if (navToggle && navMenu) {
+    navToggle.addEventListener('click', function() {
+      navToggle.classList.toggle('active');
+      navMenu.classList.toggle('active');
+    });
+  }
+  
   const countHeader = document.getElementById("countRentals");
   const totalHeader = document.createElement("h4");
-  totalHeader.textContent =
-    "There are " + rentals.length + " rentals available in total";
+  totalHeader.textContent = `Discover ${rentals.length} unique properties waiting for you`;
   countHeader.insertAdjacentElement("beforebegin", totalHeader);
 
-  countHeader.textContent = "Please choose your filters and click FILTER";
+  countHeader.textContent = "Use our smart filters to find your perfect Amsterdam escape";
 
   const roomsDiv = document.getElementById("roomsContainer");
   const roomSelect = document.createElement("select");
   roomSelect.id = "slctRooms";
+  roomSelect.className = "filter-select";
   roomsDiv.appendChild(roomSelect);
 
   const roomOptions = [];
@@ -29,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const defaultOption = document.createElement("option");
   defaultOption.value = "";
-  defaultOption.textContent = "All";
+  defaultOption.textContent = "All rooms";
   roomSelect.appendChild(defaultOption);
 
   roomOptions.forEach(function (num) {
@@ -38,8 +48,7 @@ document.addEventListener("DOMContentLoaded", function () {
     opt.textContent = num + " rooms";
     roomSelect.appendChild(opt);
   });
-  //#endregion
-  //#region מינימום מקסימום
+
   const displayMin = document.getElementById("displayMin");
   const displayMax = document.getElementById("displayMax");
   const rngMin = document.getElementById("rngMinPrice");
@@ -75,8 +84,7 @@ document.addEventListener("DOMContentLoaded", function () {
   rngMax.addEventListener("input", function () {
     displayMax.textContent = rngMax.value + "$";
   });
-  //#endregion
-  //#region דירוג
+
   const ratingSelect = document.getElementById("slctMinRating");
   ratingSelect.innerHTML = "";
 
@@ -102,12 +110,10 @@ document.addEventListener("DOMContentLoaded", function () {
     opt.textContent = rating + (rating > 1 ? " stars" : " star");
     ratingSelect.appendChild(opt);
   });
-  //#endregion
-  //#region תוצאות
+
   function displayResults(filtered) {
     const resultsSection = document.getElementById("results");
     resultsSection.innerHTML = "";
-    //שיניתי את ה "currentUser" למשתנה key
     const currentUser = getCurrentUserOrRedirect();
     const favoritesKey = getUserFavoritesKey(currentUser);
     const favorites = JSON.parse(localStorage.getItem(favoritesKey)) || [];
@@ -118,23 +124,48 @@ document.addEventListener("DOMContentLoaded", function () {
 
       const isFav = favorites.includes(Number(listing.listing_id));
       const favText = isFav ? "Remove from Favorites" : "Add to Favorites";
+      const favClass = isFav ? "favorited" : "";
+
+            const rating = listing.review_scores_rating ? 
+        Math.round(listing.review_scores_rating / 20) : 0;
+      const stars = "★".repeat(rating) + "☆".repeat(5 - rating);
 
       card.innerHTML = `
-            <img src="${listing.picture_url}" alt="${listing.name}" />
+        <div class="card-image-container">
+          <img src="${listing.picture_url}" alt="${listing.name}" loading="lazy" />
+          <div class="availability-badge">Available</div>
+        </div>
+        <div class="card-content">
+          <div class="card-header">
             <h3>${listing.name}</h3>
-            <h5>${listing.listing_id}</h5>
-            <a href="${listing.listing_url}">${listing.listing_url}</a>
-            <p>${listing.description}</p>
-            <p><strong>Price:</strong> $${listing.price} | <strong>Rating:</strong> ${listing.review_scores_rating}</p>
-            <button onclick="location.href='rent.html?listingId=${listing.listing_id}'">Rent</button>
-            <button onclick="toggleFavorite(this, ${listing.listing_id})">${favText}</button>
-        `;
+            <span class="card-id">ID: ${listing.listing_id}</span>
+          </div>
+          <a href="${listing.listing_url}" class="card-url" target="_blank" rel="noopener">View Original Listing</a>
+          <p class="card-description">${listing.description}</p>
+          <div class="card-details">
+            <div class="detail-item">
+              <div class="detail-label">Price per night</div>
+              <div class="detail-value price-value">${listing.price}</div>
+            </div>
+            <div class="detail-item">
+              <div class="detail-label">Rating</div>
+              <div class="detail-value rating-value">
+                <span class="rating-stars">${stars}</span>
+                <span>${listing.review_scores_rating || 'N/A'}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-actions">
+          <button onclick="location.href='rent.html?listingId=${listing.listing_id}'" class="card-btn btn-rent">Book Now</button>
+          <button onclick="toggleFavorite(this, ${listing.listing_id})" class="card-btn btn-favorite ${favClass}" aria-label="${favText}"></button>
+        </div>
+      `;
 
       resultsSection.appendChild(card);
     });
   }
 
-  //#region פילטר
   function filterRentals() {
     const minRating = parseInt(ratingSelect.value);
     const minPrice = parseInt(rngMin.value);
@@ -166,7 +197,4 @@ document.addEventListener("DOMContentLoaded", function () {
     displayResults(filtered);
   }
   document.getElementById("filter").addEventListener("click", filterRentals);
-
-  //#endregion
-  //#endregion
 });
