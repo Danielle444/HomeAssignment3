@@ -1,3 +1,4 @@
+//#region עברתי ונראה טוב
 //  ניהול תהליך השכרה של דירה אחת
 /**
  * פונקציית עזר לבדיקת חפיפה בין שני טווחי תאריכים.
@@ -105,7 +106,6 @@ if (!selectedApt) {
       </div>
   `;
 }
-//good
 function getUnavailableDates(listingId) {
     const unavailable = [];
     const bookings = getBookingsForListing(listingId);
@@ -123,7 +123,7 @@ function getUnavailableDates(listingId) {
 
     return unavailable;
 }
-
+//#endregion
 function disableDates(input, unavailableDates) {
   input.addEventListener("input", function () {
     const selected = input.value;
