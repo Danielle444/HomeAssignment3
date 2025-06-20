@@ -1,5 +1,5 @@
 const keyCurrentUser = "currentUser";
-
+//#region good
 function getCurrentUserOrRedirect() {
   const currentUser = JSON.parse(localStorage.getItem(keyCurrentUser));
   if (!currentUser) {
@@ -8,7 +8,7 @@ function getCurrentUserOrRedirect() {
   }
   return currentUser;
 }
-
+//#endregion
 function setUserNameUI(user) {
   const nameP = document.getElementById("userName");
   if (nameP && user) {
@@ -23,7 +23,7 @@ function getUserBookingsKey(user) {
 function getUserFavoritesKey(user) {
   return user.name + "_favorites";
 }
-
+//מחזיר string של key favorite 
 const signOutBtn = document.getElementById("SignOut");
 if (signOutBtn) {
   signOutBtn.addEventListener("click", function () {
