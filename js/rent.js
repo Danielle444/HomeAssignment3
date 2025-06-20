@@ -27,13 +27,9 @@ function checkAvailability(listingId, startDate, endDate) {
   //      - חיפוש הזמנות עם listingId זה
   //      - שימוש ב-isDateRangeOverlap להשוואה בין טווחים
   // להחזיר false אם יש חפיפה, true אם פנוי
-  for (let i = 0; i < localStorage.length; i++) {
-    const key = localStorage.key(i);
-    if (key.endsWith("_bookings")) {
-      const bookings = JSON.parse(localStorage.getItem(key)) || [];
-
+  const unavailable = [];
+  const bookings = getBookingsForListing(listingId);
       for (let booking of bookings) {
-        if (booking.listingId == listingId) {
           const overlap = isDateRangeOverlap(
             startDate,
             endDate,
@@ -43,12 +39,30 @@ function checkAvailability(listingId, startDate, endDate) {
 
           if (overlap) {
             return false;
-          }
         }
       }
-    }
-  }
   return true;
+}
+/**
+ * פונקציית עזר לחיפוש כל התאריכים התפוסים של הדיה
+ * מחזירה את כל ההזמנות שבוצעו עבור דירה ספציפית.
+ * @param {string} listingId - מזהה הדירה לחיפוש
+ * @returns {Array} - מערך של כל ההזמנות עבור הדירה
+ */
+function getBookingsForListing(listingId) {
+    const allBookingsForListing = [];
+    for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key.endsWith("_bookings")) {
+            const userBookings = JSON.parse(localStorage.getItem(key)) || [];
+            for (const booking of userBookings) {
+                if (booking.listingId == listingId) {
+                    allBookingsForListing.push(booking);
+                }
+            }
+        }
+    }
+    return allBookingsForListing;
 }
 // --- שליפת מזהי דירה ואלמנטים מהדף ---
 const params = new URLSearchParams(location.search);
@@ -56,46 +70,58 @@ const listingId = params.get("listingId");
 const selectedApt = amsterdam.find(function (apt) {
   return apt.listing_id == listingId;
 });
+//good
 const container = document.getElementById("apartmentDetails");
 
 if (!selectedApt) {
   container.innerHTML = "<p>Apartment not found.</p>";
 } else {
-  container.innerHTML = `
-    <img src="${
-      selectedApt.picture_url
-    }" alt="Apartment image" class="apartment-image">
-    <h2>${selectedApt.name}</h2>
-    <p><strong>Description:</strong> ${selectedApt.description}</p>
-    <p><strong>Price:</strong> $${selectedApt.price} per night</p>
-    <p><strong>Rating:</strong> ${
-      selectedApt.review_scores_rating || "No rating available"
-    }</p>
+      const rating = selectedApt.review_scores_rating ? 
+      Math.round(selectedApt.review_scores_rating) : 0;
+    const stars = "★".repeat(rating) + "☆".repeat(5 - rating);
+  container.innerHTML =`
+      <div class="card-image-container">
+        <img src="${selectedApt.picture_url}" alt="${selectedApt.name}" loading="lazy" />
+      </div>
+      <div class="card-content">
+        <div class="card-header">
+          <h3>${selectedApt.name}</h3>
+        </div>
+        <a href="${selectedApt.listing_url}" class="card-url" target="_blank" rel="noopener">View Original Listing</a>
+        <p class="card-description">${selectedApt.description}</p>
+        <div class="card-details">
+          <div class="detail-item">
+            <div class="detail-label">Price per night</div>
+            <div class="detail-value price-value">$${selectedApt.price}</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Rating</div>
+            <div class="detail-value rating-value">
+              <span class="rating-stars">${stars}</span>
+              <span>${selectedApt.review_scores_rating || 'N/A'}</span>
+            </div>
+          </div>
+        </div>
+      </div>
   `;
 }
+//good
 function getUnavailableDates(listingId) {
-  const unavailable = [];
+    const unavailable = [];
+    const bookings = getBookingsForListing(listingId);
 
-  for (let i = 0; i < localStorage.length; i++) {
-    const key = localStorage.key(i);
-    if (key.endsWith("_bookings")) {
-      const bookings = JSON.parse(localStorage.getItem(key)) || [];
-      bookings.forEach(function (booking) {
-        if (booking.listingId == listingId) {
-          let current = new Date(booking.startDate);
-          const end = new Date(booking.endDate);
+    bookings.forEach(function (booking) {
+        let current = new Date(booking.startDate);
+        const end = new Date(booking.endDate);
 
-          while (current <= end) {
+        while (current <= end) {
             const iso = current.toISOString().split("T")[0];
             unavailable.push(iso);
             current.setDate(current.getDate() + 1);
-          }
         }
-      });
-    }
-  }
+    });
 
-  return unavailable;
+    return unavailable;
 }
 
 function disableDates(input, unavailableDates) {
