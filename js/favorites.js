@@ -1,9 +1,9 @@
 const currentUser = getCurrentUserOrRedirect();
 const favoritesKey = getUserFavoritesKey(currentUser);
-
+//#region כל הכבוד עמית איפה מוגדר 
 document.addEventListener("DOMContentLoaded", function () {
-  const navToggle = document.getElementById('navToggle');
-  const navMenu = document.getElementById('navMenu');
+  const navToggle = document.getElementById('navToggle'); //hamburger
+  const navMenu = document.getElementById('navMenu'); //menu
   
   if (navToggle && navMenu) {
     navToggle.addEventListener('click', function() {
@@ -14,16 +14,16 @@ document.addEventListener("DOMContentLoaded", function () {
   
   loadFavorites();
 });
-
 function toggleFavorite(button, listingId) {
   let favorites = JSON.parse(localStorage.getItem(favoritesKey)) || [];
 
   listingId = Number(listingId);
-  const index = favorites.indexOf(listingId);
+  const index = favorites.indexOf(listingId);//מוצא אינדקס לפי ID
 
   if (index === -1) {
     favorites.push(listingId);
     button.className = "card-btn btn-favorite favorited";
+
     button.setAttribute('aria-label', 'Remove from favorites');
   } else {
     favorites.splice(index, 1);
@@ -65,7 +65,7 @@ function loadFavorites() {
     card.className = "card";
 
     const rating = listing.review_scores_rating ? 
-      Math.round(listing.review_scores_rating / 20) : 0;
+      Math.round(listing.review_scores_rating) : 0;
     const stars = "★".repeat(rating) + "☆".repeat(5 - rating);
 
     card.innerHTML = `
@@ -94,7 +94,7 @@ function loadFavorites() {
       </div>
       <div class="card-actions">
         <button onclick="location.href='rent.html?listingId=${listing.listing_id}'" class="card-btn btn-rent">Book Now</button>
-        <button onclick="toggleFavorite(this, ${listing.listing_id})" class="card-btn btn-favorite"></button>
+        <button onclick="toggleFavorite(this, ${listing.listing_id})" class="card-btn btn-favorite favorited"></button>
       </div>
     `;
     favoritesContainer.appendChild(card);

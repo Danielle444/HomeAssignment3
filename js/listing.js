@@ -127,7 +127,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const favClass = isFav ? "favorited" : "";
 
             const rating = listing.review_scores_rating ? 
-        Math.round(listing.review_scores_rating / 20) : 0;
+        Math.round(listing.review_scores_rating) : 0;
       const stars = "★".repeat(rating) + "☆".repeat(5 - rating);
 
       card.innerHTML = `
