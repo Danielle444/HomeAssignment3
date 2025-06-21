@@ -19,7 +19,7 @@ function isDateRangeOverlap(start1, end1, start2, end2) {
  * @param {string} listingId - מזהה הדירה
  * @param {string} startDate - תאריך התחלה שנבחר להשכרה
  * @param {string} endDate - תאריך סיום שנבחר להשכרה
- * @returns {bool} - true אם הזמנים פנויים, false אם יש חפיפה
+ * @returns {boolean} - true אם הזמנים פנויים, false אם יש חפיפה
  */
   let datesOcupide = ``;
 function checkAvailability(listingId, startDate, endDate) {
