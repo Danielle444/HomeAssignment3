@@ -21,6 +21,7 @@ function isDateRangeOverlap(start1, end1, start2, end2) {
  * @param {string} endDate - תאריך סיום שנבחר להשכרה
  * @returns {boolean} - true אם הזמנים פנויים, false אם יש חפיפה
  */
+  let datesOcupide = ``;
 function checkAvailability(listingId, startDate, endDate) {
   // TODO: לולאה על כל מפתחות ה-localStorage של המשתמשים
   // רמז - key.endsWith('_bookings')
@@ -37,8 +38,9 @@ function checkAvailability(listingId, startDate, endDate) {
             booking.startDate,
             booking.endDate
           );
-
           if (overlap) {
+
+            datesOcupide = `${formatDateForDisplay(booking.startDate)} - ${formatDateForDisplay(booking.endDate)}`;
             return false;
         }
       }
@@ -64,6 +66,15 @@ function getBookingsForListing(listingId) {
         }
     }
     return allBookingsForListing;
+}
+/**
+ * ממירה מחרוזת תאריך מפורמט 'YYYY-MM-DD' לפורמט 'DD/MM/YYYY'.
+ * @param {string} dateString - מחרוזת התאריך בפורמט 'YYYY-MM-DD'.
+ * @returns {string} - מחרוזת התאריך המעוצבת 'DD/MM/YYYY'.
+ */
+function formatDateForDisplay(dateString) {
+    const [year, month, day] = dateString.split('-'); // 
+    return `${day}/${month}/${year}`;
 }
 // --- שליפת מזהי דירה ואלמנטים מהדף ---
 const params = new URLSearchParams(location.search);
@@ -106,6 +117,8 @@ if (!selectedApt) {
       </div>
   `;
 }
+//#endregion
+//#region צריך להאפיר את התאריכים שנכנסים למערך CSS
 function getUnavailableDates(listingId) {
     const unavailable = [];
     const bookings = getBookingsForListing(listingId);
@@ -124,6 +137,7 @@ function getUnavailableDates(listingId) {
     return unavailable;
 }
 //#endregion
+//#region נראה טוב עברתי
 function disableDates(input, unavailableDates) {
   input.addEventListener("input", function () {
     const selected = input.value;
@@ -204,10 +218,9 @@ rentForm.addEventListener("submit", function (event) {
     message.style.color = "red";
     return;
   }
-
   const isAvailable = checkAvailability(listingId, startDate, endDate);
   if (!isAvailable) {
-    message.textContent = "Sorry, these dates are already booked.";
+    message.textContent = `Sorry, the proprety is booked on the ${datesOcupide}.`;
     message.style.color = "red";
     return;
   }
@@ -234,3 +247,4 @@ rentForm.addEventListener("submit", function (event) {
     }
   }, 300);
 });
+//#endregion
