@@ -4,11 +4,11 @@ document.addEventListener("DOMContentLoaded", function () {
   setUserNameUI(currentUser);
 
   const bookingsKey = getUserBookingsKey(currentUser);
-  var bookings = JSON.parse(localStorage.getItem(bookingsKey)) || [];
+  const bookings = JSON.parse(localStorage.getItem(bookingsKey)) || [];
 
-  var container = document.getElementById("bookingsContainer");
-  var noBookingsMessage = document.getElementById("noBookingsMessage");
-
+  const container = document.getElementById("bookingsContainer");
+  const noBookingsMessage = document.getElementById("noBookingsMessage");
+  
   if (bookings.length === 0) {
     noBookingsMessage.style.display = "block";
     return;
@@ -23,29 +23,45 @@ bookings.forEach(function (booking, index) {
   });
 
   if (!apartment) return;
-  const card = document.createElement("div");
-  card.className = "booking-card";
+const card = document.createElement("div");
+card.className = "card";
 
-  card.innerHTML = `
+card.innerHTML = `
+  <div class="card-image-container">
     <img src="${apartment.picture_url}" alt="${apartment.name}" class="thumbnail" />
-    <div class="booking-info">
+  </div>
+  <div class="card-content">
+    <div class="card-header">
       <h3>${apartment.name}</h3>
-      <p><strong>From:</strong> ${booking.startDate}</p>
-      <p><strong>To:</strong> ${booking.endDate}</p>
-      <p class="${isFuture ? "future" : "past"}">${isFuture ? "Upcoming Booking" : "Past Booking"}</p>
+    </div>
+    <div class="card-details">
+      <div class="detail-item">
+        <p><strong>From:</strong> ${booking.startDate}</p>
+      </div>
+      <div class="detail-item">
+        <p><strong>To:</strong> ${booking.endDate}</p>
+      </div>
+      <div class="detail-item">
+        <p class="${isFuture ? "future" : "past"}">${
+  isFuture ? "Upcoming Booking" : "Past Booking"
+}</p>
+      </div>
+    </div>
+    <div class="card-actions">
       ${
         isFuture
-          ? `<button data-index="${index}" class="cancelBtn">Cancel</button>`
+          ? `<button data-index="${index}" class="card-btn cancelBtn">Cancel</button>`
           : ""
       }
     </div>
-  `;
-  container.appendChild(card);
+  </div>
+`;
+container.appendChild(card);
 });
 
   container.addEventListener("click", function (event) {
     if (event.target.classList.contains("cancelBtn")) {
-      var indexToRemove = parseInt(event.target.dataset.index);
+      const indexToRemove = parseInt(event.target.dataset.index);
       bookings.splice(indexToRemove, 1);
       localStorage.setItem(bookingsKey, JSON.stringify(bookings));
       location.reload();
