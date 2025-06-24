@@ -182,6 +182,7 @@ function validateDatesLive() {
   const start = new Date(startDate);
   const end = new Date(endDate);
 
+  
   if (start < today) {
     message.textContent = "Start date must be today or later.";
     message.style.color = "red";
