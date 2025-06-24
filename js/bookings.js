@@ -86,6 +86,8 @@ function ShowBookings(sortedBookings)
   }
 
 sortedBookings.forEach(function (booking, index) {
+
+
   const status = booking.status;
   const isFuture = status === "future";
   const apartment = amsterdam.find(function (apt) {
