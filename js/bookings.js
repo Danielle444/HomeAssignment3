@@ -42,6 +42,42 @@ bookings.forEach(booking => {
   const container = document.getElementById("bookingsContainer");
   const noBookingsMessage = document.getElementById("noBookingsMessage");
   
+const filterCheckboxContainer = document.getElementById("filterCheckbox");
+    const filterButton = document.getElementById("filterButton");
+
+    const availableStatuses = {
+        "future": futureBookings,
+        "current": currentBookings,
+        "past": pastBookings,
+    };
+
+    let filtersCreated = false;
+    for (const status in availableStatuses) {
+        if (availableStatuses[status].length > 0) {
+            const label = document.createElement("label");
+            const checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.name = "status";
+            checkbox.value = status;
+            checkbox.checked = true; // נסמן כברירת מחדל
+
+            label.appendChild(checkbox);
+            label.appendChild(document.createTextNode(` ${status.charAt(0).toUpperCase() + status.slice(1)}`));
+            filterCheckboxContainer.appendChild(label);
+            filtersCreated = true;
+        }
+    }
+
+
+
+    if (filtersCreated) {
+        filterButton.style.display = "block";
+    }
+
+function ShowBookings(sortedBookings)
+{
+  container.innerHTML = "";
+
   if (sortedBookings.length === 0) {
     noBookingsMessage.style.display = "block";
     return;
@@ -50,7 +86,7 @@ bookings.forEach(booking => {
   }
 
 sortedBookings.forEach(function (booking, index) {
-    const status = booking.status;
+  const status = booking.status;
   const isFuture = status === "future";
   const apartment = amsterdam.find(function (apt) {
     return apt.listing_id.toString() === booking.listingId.toString();
@@ -90,6 +126,21 @@ card.innerHTML = `
 `;
 container.appendChild(card);
 });
+}
+
+ShowBookings(sortedBookings);
+
+    filterButton.addEventListener("click", function() {
+        const selectedStatuses = [];
+        const checkboxes = filterCheckboxContainer.querySelectorAll("input[type='checkbox']:checked");
+        checkboxes.forEach(checkbox => {
+            selectedStatuses.push(checkbox.value);
+        });
+        
+        const filteredBookings = sortedBookings.filter(booking => selectedStatuses.includes(booking.status));
+        ShowBookings(filteredBookings);
+    });
+
 
 container.addEventListener("click", function (event) {
   if (event.target.classList.contains("cancelBtn")) {
