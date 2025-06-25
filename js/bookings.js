@@ -41,7 +41,8 @@ bookings.forEach(booking => {
 
   const container = document.getElementById("bookingsContainer");
   const noBookingsMessage = document.getElementById("noBookingsMessage");
-  
+  const filterError = document.getElementById("filterError"); 
+
 const filterCheckboxContainer = document.getElementById("filterCheckbox");
     const filterButton = document.getElementById("filterButton");
 
@@ -59,7 +60,7 @@ const filterCheckboxContainer = document.getElementById("filterCheckbox");
             checkbox.type = "checkbox";
             checkbox.name = "status";
             checkbox.value = status;
-            checkbox.checked = true; // נסמן כברירת מחדל
+            checkbox.checked = true; 
 
             label.appendChild(checkbox);
             label.appendChild(document.createTextNode(` ${status.charAt(0).toUpperCase() + status.slice(1)}`));
@@ -84,17 +85,43 @@ function ShowBookings(sortedBookings)
   } else {
     noBookingsMessage.style.display = "none";
   }
+  let status = "";
+      let statusGroupContainer = null;
 
 sortedBookings.forEach(function (booking, index) {
+console.log(`check index ${index}`);
+  let isFirstStatus = false;
 
+if(index===0)
+{
+         isFirstStatus = true;
 
-  const status = booking.status;
+}
+else{
+console.log(`check status ${status}`);
+if(status !== booking.status)
+  {
+       isFirstStatus = true;
+  }
+}
+status=booking.status;
   const isFuture = status === "future";
   const apartment = amsterdam.find(function (apt) {
     return apt.listing_id.toString() === booking.listingId.toString();
   });
     if (!apartment) return;
+    if(isFirstStatus)
+    {
+            const statusTitle = document.createElement("h2");
+            statusTitle.className = "status-title";
+            statusTitle.textContent = `${status.toUpperCase()} Bookings`;
+            container.appendChild(statusTitle);
 
+            // יצירת ה-div שיעטוף את כל הכרטיסים בקבוצה
+            statusGroupContainer = document.createElement("div"); // 
+            statusGroupContainer.className = "status-group";
+            container.appendChild(statusGroupContainer); // 
+    }
 const card = document.createElement("div");
 card.className = "card";
 
@@ -126,30 +153,42 @@ card.innerHTML = `
     </div>
   </div>
 `;
-container.appendChild(card);
+if(statusGroupContainer)
+{
+  statusGroupContainer.appendChild(card);
+}
+else
+{
+  container.appendChild(card);
+}
 });
 }
 
 ShowBookings(sortedBookings);
 
     filterButton.addEventListener("click", function() {
+        filterError.style.display = "none";
         const selectedStatuses = [];
         const checkboxes = filterCheckboxContainer.querySelectorAll("input[type='checkbox']:checked");
         checkboxes.forEach(checkbox => {
             selectedStatuses.push(checkbox.value);
         });
-        
+            if (selectedStatuses.length === 0) {
+        container.innerHTML = ""; 
+        noBookingsMessage.style.display = "none"; 
+        filterError.style.display = "block";
+        return;
+    }
         const filteredBookings = sortedBookings.filter(booking => selectedStatuses.includes(booking.status));
         ShowBookings(filteredBookings);
+
     });
 
 
 container.addEventListener("click", function (event) {
   if (event.target.classList.contains("cancelBtn")) {
-    // 1. קבלת המזהה כמחרוזת
     const idToRemove = event.target.dataset.listingId; 
 
-    // 2. השוואת מחרוזת למחרוזת
     const indexToRemove = bookings.findIndex(b => b.listingId.toString() === idToRemove.toString());
 
     if (indexToRemove > -1) {
