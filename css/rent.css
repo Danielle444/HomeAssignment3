@@ -1,0 +1,252 @@
+@import url('variables.css');
+
+/* Mobile Navigation Transition */
+.nav-menu {
+  transition: transform 0.3s ease;
+}
+
+/* Rent Page Layout */
+#rentMainContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: start;
+}
+
+/* Form Section */
+#rentFormSection {
+  background: var(--card-bg);
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: var(--card-shadow);
+  border: 1px solid var(--card-border);
+}
+
+#rentFormSection h2 {
+  color: var(--color-primary);
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 30px;
+  text-align: center;
+  letter-spacing: -0.5px;
+}
+
+/* Form Styling */
+.rent-form {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.rent-form .form-group {
+  margin-bottom: 0;
+}
+
+.rent-form .form-group label {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--color-primary);
+  font-weight: 600;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.rent-form input[type="date"],
+.rent-form input[type="text"] {
+  width: 100%;
+  padding: 16px 20px;
+  border: 2px solid var(--input-border);
+  border-radius: 12px;
+  font-size: 16px;
+  color: var(--color-text);
+  background: var(--input-bg);
+  outline: none;
+  font-family: inherit;
+}
+
+.rent-form input[type="date"]:focus,
+.rent-form input[type="text"]:focus {
+  border-color: var(--input-border-focus);
+}
+
+.rent-form input[type="date"]::placeholder,
+.rent-form input[type="text"]::placeholder {
+  color: var(--input-placeholder);
+  font-style: italic;
+}
+
+/* Credit Card Input Styling */
+#ccNumber {
+  font-family: 'Courier New', monospace;
+  letter-spacing: 1px;
+  font-size: 18px;
+}
+
+/* Submit Button */
+#bookNowBtn {
+  background: linear-gradient(45deg, var(--color-primary), #2a5d8a);
+  color: white;
+  border: none;
+  padding: 18px 32px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  margin-top: 15px;
+}
+
+/* Message Styling */
+.message {
+  text-align: center;
+  padding: 15px 20px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 14px;
+  margin-top: 20px;
+  border: 2px solid transparent;
+}
+
+.message:not(:empty) {
+  background: rgba(245, 247, 250, 0.8);
+  border-color: var(--card-border);
+}
+
+/* Apartment Details Section */
+#apartmentDetails {
+  max-width: none;
+  margin: 0;
+  height: fit-content;
+}
+
+#apartmentDetails .card-content {
+  padding: 30px;
+}
+
+#apartmentDetails .card-header h3 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+#apartmentDetails .card-description {
+  font-size: 16px;
+  line-height: 1.6;
+  margin: 20px 0;
+}
+
+#apartmentDetails .card-details {
+  margin: 25px 0;
+  padding: 20px;
+}
+
+#apartmentDetails .detail-value {
+  font-size: 18px;
+}
+
+#apartmentDetails .price-value {
+  font-size: 22px;
+}
+
+/* Date Input Enhancement */
+input[type="date"] {
+  position: relative;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="%231F4E79" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>') no-repeat center;
+  background-size: 20px;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 4px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  #rentMainContainer {
+    grid-template-columns: 1fr;
+    gap: 30px;
+    padding: 20px 15px;
+  }
+  
+  #rentFormSection {
+    padding: 30px 25px;
+    border-radius: 16px;
+    order: -1; /* Form appears first on mobile */
+  }
+  
+  #rentFormSection h2 {
+    font-size: 24px;
+    margin-bottom: 25px;
+  }
+  
+  .rent-form {
+    gap: 20px;
+  }
+  
+  .rent-form input[type="date"],
+  .rent-form input[type="text"] {
+    padding: 14px 18px;
+    font-size: 16px;
+  }
+  
+  #bookNowBtn {
+    padding: 16px 28px;
+    font-size: 15px;
+  }
+  
+  #apartmentDetails .card-content {
+    padding: 20px;
+  }
+  
+  #apartmentDetails .card-header h3 {
+    font-size: 20px;
+  }
+  
+  #apartmentDetails .card-description {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  #rentMainContainer {
+    padding: 15px 10px;
+    gap: 25px;
+  }
+  
+  #rentFormSection {
+    padding: 25px 20px;
+  }
+  
+  #rentFormSection h2 {
+    font-size: 22px;
+  }
+  
+  .rent-form input[type="date"],
+  .rent-form input[type="text"] {
+    padding: 12px 16px;
+    font-size: 15px;
+  }
+  
+  #ccNumber {
+    font-size: 16px;
+  }
+  
+  #bookNowBtn {
+    padding: 14px 24px;
+    font-size: 14px;
+  }
+  
+  #apartmentDetails .card-content {
+    padding: 15px;
+  }
+  
+  #apartmentDetails .card-details {
+    padding: 15px;
+    margin: 20px 0;
+  }
+}

@@ -69,6 +69,7 @@ body {
   align-items: center;
   width: 100%;
   margin-left: 30px;
+  transition: transform 0.3s ease;
 }
 
 .nav-left {
@@ -462,13 +463,14 @@ body {
     flex-direction: column;
     padding: 20px 0;
     margin: 0;
-    transform: translateX(-100%);
+    transform: translateY(-100%);
     box-shadow: 0 4px 20px rgba(31, 78, 121, 0.3);
     z-index: 999;
+    transition: transform 0.3s ease;
   }
   
   .nav-menu.active {
-    transform: translateX(0);
+    transform: translateY(0);
   }
   
   .nav-left {

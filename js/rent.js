@@ -1,5 +1,19 @@
 //#region עברתי ונראה טוב
 //  ניהול תהליך השכרה של דירה אחת
+
+// Mobile Navigation
+document.addEventListener("DOMContentLoaded", function () {
+  const navToggle = document.getElementById('navToggle');
+  const navMenu = document.getElementById('navMenu');
+  
+  if (navToggle && navMenu) {
+    navToggle.addEventListener('click', function() {
+      navToggle.classList.toggle('active');
+      navMenu.classList.toggle('active');
+    });
+  }
+});
+
 /**
  * פונקציית עזר לבדיקת חפיפה בין שני טווחי תאריכים.
  * מחזירה true אם יש חפיפה, false אם אין.
