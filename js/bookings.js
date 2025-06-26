@@ -1,10 +1,32 @@
 //  הוספה/ביטול השכרות, לפי currentUser
 document.addEventListener("DOMContentLoaded", function () {
+  // Mobile Navigation
+  const navToggle = document.getElementById('navToggle');
+  const navMenu = document.getElementById('navMenu');
+  
+  if (navToggle && navMenu) {
+    navToggle.addEventListener('click', function() {
+      navToggle.classList.toggle('active');
+      navMenu.classList.toggle('active');
+    });
+  }
+
+  // Debug localStorage
+  console.log("All localStorage keys:", Object.keys(localStorage));
+  
   const currentUser = getCurrentUserOrRedirect();
+  console.log("Current user:", currentUser);
+  
   setUserNameUI(currentUser);
 
   const bookingsKey = getUserBookingsKey(currentUser);
-  const bookings = JSON.parse(localStorage.getItem(bookingsKey)) || [];
+  console.log("Bookings key:", bookingsKey);
+  
+  const bookingsData = localStorage.getItem(bookingsKey);
+  console.log("Raw bookings data:", bookingsData);
+  
+  const bookings = JSON.parse(bookingsData) || [];
+  console.log("Parsed bookings:", bookings);
 
  function getStartOfDay(date) {
   const newDate = new Date(date);
@@ -52,6 +74,27 @@ const filterCheckboxContainer = document.getElementById("filterCheckbox");
         "past": pastBookings,
     };
 
+    // Add "Any" option first
+    const anyLabel = document.createElement("label");
+    anyLabel.className = "filter-any";
+    const anyCheckbox = document.createElement("input");
+    anyCheckbox.type = "checkbox";
+    anyCheckbox.name = "status";
+    anyCheckbox.value = "any";
+    anyCheckbox.checked = true;
+    anyCheckbox.addEventListener('change', function() {
+        if (this.checked) {
+            // Uncheck all other options
+            filterCheckboxContainer.querySelectorAll('input[type="checkbox"]:not([value="any"])').forEach(cb => {
+                cb.checked = false;
+            });
+        }
+    });
+
+    anyLabel.appendChild(anyCheckbox);
+    anyLabel.appendChild(document.createTextNode(` Any`));
+    filterCheckboxContainer.appendChild(anyLabel);
+
     let filtersCreated = false;
     for (const status in availableStatuses) {
         if (availableStatuses[status].length > 0) {
@@ -60,8 +103,17 @@ const filterCheckboxContainer = document.getElementById("filterCheckbox");
             checkbox.type = "checkbox";
             checkbox.name = "status";
             checkbox.value = status;
-            checkbox.checked = true; 
 
+            checkbox.checked = false;
+            
+            // Handle individual checkbox changes
+            checkbox.addEventListener('change', function() {
+                if (this.checked) {
+                    // Uncheck "Any" option
+                    const anyOption = filterCheckboxContainer.querySelector('input[value="any"]');
+                    if (anyOption) anyOption.checked = false;
+                }
+            });
             label.appendChild(checkbox);
             label.appendChild(document.createTextNode(` ${status.charAt(0).toUpperCase() + status.slice(1)}`));
             filterCheckboxContainer.appendChild(label);
@@ -69,17 +121,15 @@ const filterCheckboxContainer = document.getElementById("filterCheckbox");
         }
     }
 
-
-
-    if (filtersCreated) {
+    if (filtersCreated || sortedBookings.length > 0) {
         filterButton.style.display = "block";
     }
 
-function ShowBookings(sortedBookings)
+function ShowBookings(bookingsToShow)
 {
   container.innerHTML = "";
 
-  if (sortedBookings.length === 0) {
+  if (bookingsToShow.length === 0) {
     noBookingsMessage.style.display = "block";
     return;
   } else {
@@ -88,7 +138,9 @@ function ShowBookings(sortedBookings)
   let status = "";
       let statusGroupContainer = null;
 
+
 sortedBookings.forEach(function (booking, index) {
+
 console.log(`check index ${index}`);
   let isFirstStatus = false;
 
@@ -170,16 +222,31 @@ ShowBookings(sortedBookings);
         filterError.style.display = "none";
         const selectedStatuses = [];
         const checkboxes = filterCheckboxContainer.querySelectorAll("input[type='checkbox']:checked");
+        
+        let isAnySelected = false;
         checkboxes.forEach(checkbox => {
-            selectedStatuses.push(checkbox.value);
+            if (checkbox.value === "any") {
+                isAnySelected = true;
+            } else {
+                selectedStatuses.push(checkbox.value);
+            }
         });
-            if (selectedStatuses.length === 0) {
-        container.innerHTML = ""; 
-        noBookingsMessage.style.display = "none"; 
-        filterError.style.display = "block";
-        return;
-    }
-        const filteredBookings = sortedBookings.filter(booking => selectedStatuses.includes(booking.status));
+        
+        if (checkboxes.length === 0) {
+            container.innerHTML = ""; 
+            noBookingsMessage.style.display = "none"; 
+            filterError.style.display = "block";
+            return;
+        }
+        
+        let filteredBookings;
+        if (isAnySelected) {
+            filteredBookings = sortedBookings; // Show all bookings
+        } else {
+            filteredBookings = sortedBookings.filter(booking => selectedStatuses.includes(booking.status));
+        }
+        
+
         ShowBookings(filteredBookings);
 
     });

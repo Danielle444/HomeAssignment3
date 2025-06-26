@@ -3,38 +3,67 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Bookings- Amsterdam Rentals</title>
+    <title>My Bookings - Amsterdam Rentals</title>
     <link rel="icon" href="images/icon.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="css/mybookings.css" />
     <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/mybookings.css" />
   </head>
   <body>
-    <header>
+    <header class="main-header">
       <nav class="navbar">
-        <div class="nav-left">
-          <a href="index.html">Home</a>
-          <a href="favorites.html">Favorites</a>
-          <a href="mybookings.html">My Bookings</a>
+        <div class="nav-brand">
+          <span class="brand-text">Amsterdam Rentals</span>
         </div>
-        <div class="nav-right">
-          <span id="userName">Guest</span>
-          <button id="SignOut">Sign Out</button>
+        
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </button>
+        
+        <div class="nav-menu" id="navMenu">
+          <div class="nav-left">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="favorites.html" class="nav-link">Favorites</a>
+            <a href="mybookings.html" class="nav-link active">My Bookings</a>
+          </div>
+          <div class="nav-right">
+            <span class="user-name" id="userName">Guest</span>
+            <button class="btn-signout" id="SignOut">Sign Out</button>
+          </div>
         </div>
       </nav>
     </header>
-    <main>
-      <h1>My Bookings</h1>
-      <div id="allFilterContainer">
-        <div id="filterCheckbox">
+
+    <main class="main-content">
+      <section class="page-header">
+        <h1 class="page-title">My Bookings</h1>
+        <p class="page-subtitle">Manage your reservations and travel plans</p>
+      </section>
+
+      <section class="bookings-section">
+        <div class="filters-container" id="allFilterContainer">
+          <div class="filter-checkboxes" id="filterCheckbox">
+            <!-- Checkboxes will be populated by JavaScript -->
+          </div>
+          <button id="filterButton" class="btn-filter" style="display: none;">Filter Results</button>
+          <p id="filterError" class="filter-error-message" style="display: none;">Please select a booking status.</p>
         </div>
-            <button id="filterButton" style="display: none; margin-top: 10px;">Filter Results</button>
-            <p id="filterError">Please select a booking status.</p>
-      </div>
-      <div id="bookingsContainer">
-        <p id="noBookingsMessage">You have no bookings yet.</p>
-      </div>
+
+        <div id="bookingsContainer" class="bookings-container">
+          <p id="noBookingsMessage" class="no-bookings-message" style="display: none;">You have no bookings yet.</p>
+        </div>
+      </section>
+
     </main>
-      <script src="js/data/amsterdam.js"></script>
+
+    <footer class="main-footer">
+      <div class="footer-bottom">
+        <p>&copy; 2025 Amsterdam Rentals. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script src="js/data/amsterdam.js"></script>
     <script src="js/storage.js"></script>
     <script src="js/bookings.js"></script>
   </body>

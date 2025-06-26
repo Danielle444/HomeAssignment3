@@ -9,53 +9,83 @@
     <link rel="stylesheet" href="css/rent.css" />
   </head>
   <body>
-    <header>
+    <header class="main-header">
       <nav class="navbar">
-        <div class="nav-left">
-          <a href="index.html">Home</a>
-          <a href="favorites.html">Favorites</a>
-          <a href="mybookings.html">My Bookings</a>
+        <div class="nav-brand">
+          <span class="brand-text">Amsterdam Rentals</span>
         </div>
-        <div class="nav-right">
-          <span id="userName">Guest</span>
-          <button id="SignOut">Sign Out</button>
+        
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </button>
+        
+        <div class="nav-menu" id="navMenu">
+          <div class="nav-left">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="favorites.html" class="nav-link">Favorites</a>
+            <a href="mybookings.html" class="nav-link">My Bookings</a>
+          </div>
+          <div class="nav-right">
+            <span class="user-name" id="userName">Guest</span>
+            <button class="btn-signout" id="SignOut">Sign Out</button>
+          </div>
         </div>
       </nav>
     </header>
-    <main id="rentMainContainer">
-      <section id="apartmentDetails" class="card"></section>
-      <section id="rentFormSection">
-        <h2>Book this apartment</h2>
-        <form id="rentForm" class="rent-form">
-          <div class="form-group">
-            <label for="startDate">Start Date:</label>
-            <input type="date" id="startDate" name="startDate" required />
-          </div>
 
-          <div class="form-group">
-            <label for="endDate">End Date:</label>
-            <input type="date" id="endDate" name="endDate" required />
-          </div>
-
-          <div class="form-group">
-            <label for="ccNumber">Credit Card:</label>
-            <input
-              type="text"
-              id="ccNumber"
-              name="ccNumber"
-              required
-              maxlength="19"
-              inputmode="numeric"
-              placeholder="1234 5678 9012 3456"
-            />
-          </div>
-
-          <button type="submit" id="bookNowBtn">Book Now</button>
-        </form>
-
-        <p id="bookingMessage" class="message"></p>
+    <main class="main-content">
+      <section class="page-header">
+        <h1 class="page-title">Book Your Stay</h1>
+        <p class="page-subtitle">Complete your reservation in just a few simple steps</p>
       </section>
+
+      <div id="rentMainContainer">
+        <section id="rentFormSection">
+          <h2>Book this apartment</h2>
+          
+          <form id="rentForm" class="rent-form">
+            <div class="form-group">
+              <label for="startDate">Check-in Date</label>
+              <input type="date" id="startDate" name="startDate" required />
+            </div>
+
+            <div class="form-group">
+              <label for="endDate">Check-out Date</label>
+              <input type="date" id="endDate" name="endDate" required />
+            </div>
+
+            <div class="form-group">
+              <label for="ccNumber">Credit Card Number</label>
+              <input
+                type="text"
+                id="ccNumber"
+                name="ccNumber"
+                required
+                maxlength="19"
+                inputmode="numeric"
+                placeholder="1234 5678 9012 3456"
+              />
+            </div>
+
+            <button type="submit" id="bookNowBtn">Book Now</button>
+          </form>
+
+          <p id="bookingMessage" class="message"></p>
+        </section>
+        <section id="apartmentDetails" class="card">
+        </section>
+
+      </div>
     </main>
+
+    <footer class="main-footer">
+      <div class="footer-bottom">
+        <p>&copy; 2025 Amsterdam Rentals. All rights reserved.</p>
+      </div>
+    </footer>
+
     <script src="js/data/amsterdam.js"></script>
     <script src="js/storage.js"></script>
     <script src="js/rent.js"></script>
