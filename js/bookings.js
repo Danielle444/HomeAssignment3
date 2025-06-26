@@ -103,6 +103,7 @@ const filterCheckboxContainer = document.getElementById("filterCheckbox");
             checkbox.type = "checkbox";
             checkbox.name = "status";
             checkbox.value = status;
+
             checkbox.checked = false;
             
             // Handle individual checkbox changes
@@ -113,7 +114,6 @@ const filterCheckboxContainer = document.getElementById("filterCheckbox");
                     if (anyOption) anyOption.checked = false;
                 }
             });
-
             label.appendChild(checkbox);
             label.appendChild(document.createTextNode(` ${status.charAt(0).toUpperCase() + status.slice(1)}`));
             filterCheckboxContainer.appendChild(label);
@@ -138,7 +138,9 @@ function ShowBookings(bookingsToShow)
   let status = "";
       let statusGroupContainer = null;
 
-bookingsToShow.forEach(function (booking, index) {
+
+sortedBookings.forEach(function (booking, index) {
+
 console.log(`check index ${index}`);
   let isFirstStatus = false;
 
@@ -244,7 +246,9 @@ ShowBookings(sortedBookings);
             filteredBookings = sortedBookings.filter(booking => selectedStatuses.includes(booking.status));
         }
         
+
         ShowBookings(filteredBookings);
+
     });
 
 
