@@ -1,3 +1,7 @@
+document.addEventListener("DOMContentLoaded", function () {
+  console.log(amsterdam);
+  const rentals = amsterdam;
+  
   const countHeader = document.getElementById("countRentals");
   const totalHeader = document.createElement("h4");
   totalHeader.textContent = `Discover ${rentals.length} unique properties waiting for you`;

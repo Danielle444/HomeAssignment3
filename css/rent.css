@@ -1,11 +1,9 @@
 @import url('variables.css');
 
-/* Mobile Navigation Transition */
 .nav-menu {
   transition: transform 0.3s ease;
 }
 
-/* Rent Page Layout */
 #rentMainContainer {
   max-width: 1200px;
   margin: 0 auto;
@@ -16,7 +14,6 @@
   align-items: start;
 }
 
-/* Form Section */
 #rentFormSection {
   background: var(--card-bg);
   border-radius: 20px;
@@ -34,7 +31,6 @@
   letter-spacing: -0.5px;
 }
 
-/* Form Styling */
 .rent-form {
   display: flex;
   flex-direction: column;
@@ -79,14 +75,12 @@
   font-style: italic;
 }
 
-/* Credit Card Input Styling */
 #ccNumber {
   font-family: 'Courier New', monospace;
   letter-spacing: 1px;
   font-size: 18px;
 }
 
-/* Submit Button */
 #bookNowBtn {
   background: linear-gradient(45deg, var(--color-primary), #2a5d8a);
   color: white;
@@ -101,7 +95,6 @@
   margin-top: 15px;
 }
 
-/* Message Styling */
 .message {
   text-align: center;
   padding: 15px 20px;
@@ -117,7 +110,6 @@
   border-color: var(--card-border);
 }
 
-/* Apartment Details Section */
 #apartmentDetails {
   max-width: none;
   margin: 0;
@@ -152,7 +144,6 @@
   font-size: 22px;
 }
 
-/* Date Input Enhancement */
 input[type="date"] {
   position: relative;
 }
@@ -165,7 +156,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   border-radius: 4px;
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
   #rentMainContainer {
     grid-template-columns: 1fr;
@@ -176,7 +166,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   #rentFormSection {
     padding: 30px 25px;
     border-radius: 16px;
-    order: -1; /* Form appears first on mobile */
+    order: -1;
   }
   
   #rentFormSection h2 {
