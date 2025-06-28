@@ -1,19 +1,6 @@
 //#region עברתי ונראה טוב
 //  ניהול תהליך השכרה של דירה אחת
 
-// Mobile Navigation
-document.addEventListener("DOMContentLoaded", function () {
-  const navToggle = document.getElementById('navToggle');
-  const navMenu = document.getElementById('navMenu');
-  
-  if (navToggle && navMenu) {
-    navToggle.addEventListener('click', function() {
-      navToggle.classList.toggle('active');
-      navMenu.classList.toggle('active');
-    });
-  }
-});
-
 /**
  * פונקציית עזר לבדיקת חפיפה בין שני טווחי תאריכים.
  * מחזירה true אם יש חפיפה, false אם אין.
@@ -53,7 +40,6 @@ function checkAvailability(listingId, startDate, endDate) {
             booking.endDate
           );
           if (overlap) {
-
             datesOcupide = `${formatDateForDisplay(booking.startDate)} - ${formatDateForDisplay(booking.endDate)}`;
             return false;
         }
@@ -73,7 +59,7 @@ function getBookingsForListing(listingId) {
         if (key.endsWith("_bookings")) {
             const userBookings = JSON.parse(localStorage.getItem(key)) || [];
             for (const booking of userBookings) {
-                if (booking.listingId == listingId) {
+                if (booking.listingId === listingId) {
                     allBookingsForListing.push(booking);
                 }
             }
@@ -94,7 +80,7 @@ function formatDateForDisplay(dateString) {
 const params = new URLSearchParams(location.search);
 const listingId = params.get("listingId");
 const selectedApt = amsterdam.find(function (apt) {
-  return apt.listing_id == listingId;
+  return apt.listing_id === listingId;
 });
 //good
 const container = document.getElementById("apartmentDetails");

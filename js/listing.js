@@ -2,16 +2,6 @@ document.addEventListener("DOMContentLoaded", function () {
   console.log(amsterdam);
   const rentals = amsterdam;
   
-  const navToggle = document.getElementById('navToggle');
-  const navMenu = document.getElementById('navMenu');
-  
-  if (navToggle && navMenu) {
-    navToggle.addEventListener('click', function() {
-      navToggle.classList.toggle('active');
-      navMenu.classList.toggle('active');
-    });
-  }
-  
   const countHeader = document.getElementById("countRentals");
   const totalHeader = document.createElement("h4");
   totalHeader.textContent = `Discover ${rentals.length} unique properties waiting for you`;

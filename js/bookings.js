@@ -1,16 +1,6 @@
 //  הוספה/ביטול השכרות, לפי currentUser
 document.addEventListener("DOMContentLoaded", function () {
-  // Mobile Navigation
-  const navToggle = document.getElementById('navToggle');
-  const navMenu = document.getElementById('navMenu');
   
-  if (navToggle && navMenu) {
-    navToggle.addEventListener('click', function() {
-      navToggle.classList.toggle('active');
-      navMenu.classList.toggle('active');
-    });
-  }
-
   // Debug localStorage
   console.log("All localStorage keys:", Object.keys(localStorage));
   

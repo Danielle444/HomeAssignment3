@@ -2,16 +2,6 @@ const currentUser = getCurrentUserOrRedirect();
 const favoritesKey = getUserFavoritesKey(currentUser);
 //#region כל הכבוד עמית איפה מוגדר 
 document.addEventListener("DOMContentLoaded", function () {
-  const navToggle = document.getElementById('navToggle'); //hamburger
-  const navMenu = document.getElementById('navMenu'); //menu
-  
-  if (navToggle && navMenu) {
-    navToggle.addEventListener('click', function() {
-      navToggle.classList.toggle('active');
-      navMenu.classList.toggle('active');
-    });
-  }
-  
   loadFavorites();
 });
 function toggleFavorite(button, listingId) {
