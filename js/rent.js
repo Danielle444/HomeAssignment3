@@ -118,7 +118,8 @@ if (!selectedApt) {
   `;
 }
 //#endregion
-//#region צריך להאפיר את התאריכים שנכנסים למערך CSS
+//#region 
+//בעת הזמנת מקום התאריכים שנבחרו משוריינים לימים מלאים
 function getUnavailableDates(listingId) {
     const unavailable = [];
     const bookings = getBookingsForListing(listingId);
