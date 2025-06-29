@@ -95,7 +95,6 @@ function getUnavailableDates(listingId) {
     return unavailable;
 }
 //#endregion
-
 //#region נראה טוב עברתי
 function disableDates(input, unavailableDates) {
   input.addEventListener("input", function () {
@@ -106,45 +105,28 @@ function disableDates(input, unavailableDates) {
     }
   });
 }
-
 //#endregion
-
-//#region NEW VALIDATION FUNCTIONS - הוספה חדשה
-/**
- * Validates cardholder name - only English letters and spaces
- */
+//#region
 function validateCardholderName(name) {
     const nameRegex = /^[A-Za-z\s]+$/;
     return nameRegex.test(name.trim()) && name.trim().length >= 2;
 }
 
-/**
- * Validates Israeli ID number - exactly 9 digits
- */
 function validateIdNumber(id) {
     const idRegex = /^\d{9}$/;
     return idRegex.test(id);
 }
 
-/**
- * Validates CVC - exactly 3 digits
- */
 function validateCVC(cvc) {
     const cvcRegex = /^\d{3}$/;
     return cvcRegex.test(cvc);
 }
 
-/**
- * Validates email format
- */
 function validateEmail(email) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
 }
 
-/**
- * Validates expiry date - must be in the future
- */
 function validateExpiryDate(month, year) {
     if (!month || !year) return false;
     
@@ -161,9 +143,6 @@ function validateExpiryDate(month, year) {
     return false;
 }
 
-/**
- * Calculates the number of nights between two dates
- */
 function calculateNights(startDate, endDate) {
     if (!startDate || !endDate) return 0;
     
@@ -175,9 +154,6 @@ function calculateNights(startDate, endDate) {
     return daysDiff > 0 ? daysDiff : 0;
 }
 
-/**
- * Updates the booking summary with calculated totals
- */
 function updateBookingSummary() {
     const startDate = startInput.value;
     const endDate = endInput.value;
@@ -194,21 +170,18 @@ function updateBookingSummary() {
         return;
     }
     
-    // Extract price from selectedApt.price (remove $ and commas)
     const pricePerNight = parseFloat(selectedApt.price.replace(/[$,]/g, ''));
     const totalAmount = nights * pricePerNight;
     
-    // Update summary display
     document.getElementById('numberOfNights').textContent = nights;
     document.getElementById('pricePerNight').textContent = selectedApt.price;
     document.getElementById('totalAmount').textContent = `$${totalAmount.toFixed(2)}`;
     
     summaryDiv.style.display = 'block';
 }
-
 //#endregion
 
-// --- שליפת מזהי דירה ואלמנטים מהדף ---
+
 const params = new URLSearchParams(location.search);
 const listingId = params.get("listingId");
 const selectedApt = amsterdam.find(function (apt) {
@@ -251,38 +224,6 @@ if (!selectedApt) {
   `;
 }
 
-//#endregion
-//#region 
-//בעת הזמנת מקום התאריכים שנבחרו משוריינים לימים מלאים
-function getUnavailableDates(listingId) {
-    const unavailable = [];
-    const bookings = getBookingsForListing(listingId);
-
-    bookings.forEach(function (booking) {
-        let current = new Date(booking.startDate);
-        const end = new Date(booking.endDate);
-
-        while (current <= end) {
-            const iso = current.toISOString().split("T")[0];
-            unavailable.push(iso);
-            current.setDate(current.getDate() + 1);
-        }
-    });
-
-    return unavailable;
-}
-//#endregion
-//#region נראה טוב עברתי
-function disableDates(input, unavailableDates) {
-  input.addEventListener("input", function () {
-    const selected = input.value;
-    if (unavailableDates.includes(selected)) {
-      alert("This date is already booked. Please choose another.");
-      input.value = "";
-    }
-  });
-}
-
 const rentForm = document.getElementById("rentForm");
 const startInput = document.getElementById("startDate");
 const endInput = document.getElementById("endDate");
@@ -296,7 +237,6 @@ disableDates(startInput, unavailableDates);
 disableDates(endInput, unavailableDates);
 
 //#region הוספה חדשה - input formatting
-// Populate expiry years
 const yearSelect = document.getElementById('expiryYear');
 const currentYear = new Date().getFullYear();
 for (let year = currentYear; year <= currentYear + 10; year++) {
@@ -306,21 +246,18 @@ for (let year = currentYear; year <= currentYear + 10; year++) {
     yearSelect.appendChild(option);
 }
 
-// Format credit card input
 ccInput.addEventListener("input", function () {
   let rawValue = ccInput.value.replace(/\D/g, "").slice(0, 16);
   let formattedValue = rawValue.match(/.{1,4}/g)?.join(" ") || "";
   ccInput.value = formattedValue;
 });
 
-// Format ID number input
 const idInput = document.getElementById('idNumber');
 idInput.addEventListener("input", function () {
     let rawValue = idInput.value.replace(/\D/g, "").slice(0, 9);
     idInput.value = rawValue;
 });
 
-// Format CVC input
 const cvcInput = document.getElementById('cvcNumber');
 cvcInput.addEventListener("input", function () {
     let rawValue = cvcInput.value.replace(/\D/g, "").slice(0, 3);
@@ -328,7 +265,6 @@ cvcInput.addEventListener("input", function () {
 });
 //#endregion
 
-// --- ולידציה חיה בזמן בחירת תאריכים ---
 function validateDatesLive() {
   const startDate = startInput.value;
   const endDate = endInput.value;
@@ -356,8 +292,6 @@ function validateDatesLive() {
     message.style.color = "red";
     return;
   }
-
-  // אם הכל תקין – ננקה את ההודעה ונעדכן סיכום
   message.textContent = "";
   updateBookingSummary();
 }
@@ -365,7 +299,6 @@ function validateDatesLive() {
 startInput.addEventListener("change", validateDatesLive);
 endInput.addEventListener("change", validateDatesLive);
 
-// --- טיפול בשליחה (submit) של הטופס ---
 rentForm.addEventListener("submit", function (event) {
   event.preventDefault();
 
@@ -379,10 +312,31 @@ rentForm.addEventListener("submit", function (event) {
   const expiryYear = document.getElementById('expiryYear').value;
   const email = document.getElementById('email').value.trim();
 
-  // אם יש שגיאת ולידציה פעילה – לא נתקדם
-  if (message.textContent !== "") return;
+  if (!startDate || !endDate) {
+    message.textContent = "Please select check-in and check-out dates.";
+    message.style.color = "red";
+    return;
+  }
 
-  // NEW VALIDATIONS
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const start = new Date(startDate);
+  const end = new Date(endDate);
+
+  if (start < today) {
+    message.textContent = "Start date must be today or later.";
+    message.style.color = "red";
+    return;
+  }
+
+  if (start >= end) {
+    message.textContent = "End date must be after start date.";
+    message.style.color = "red";
+    return;
+  }
+
+  if (message.textContent !== "" && message.style.color === "red") return;
+
   if (!validateCardholderName(cardholderName)) {
     message.textContent = "Please enter a valid cardholder name (English letters only).";
     message.style.color = "red";

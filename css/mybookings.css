@@ -3,6 +3,16 @@
 .bookings-section {
   min-height: 400px;
   margin-top: 20px;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.8s ease 0.3s forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .filters-container {
@@ -12,6 +22,30 @@
   margin-bottom: 40px;
   box-shadow: var(--card-shadow);
   border: 1px solid var(--card-border);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.filters-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(138, 191, 144, 0.05), transparent);
+  transition: left 0.8s ease;
+}
+
+.filters-container:hover::before {
+  left: 100%;
+}
+
+.filters-container:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(31, 78, 121, 0.15);
+  border-color: var(--color-accent);
 }
 
 .filter-checkboxes {
@@ -20,6 +54,8 @@
   margin-bottom: 25px;
   flex-wrap: wrap;
   justify-content: center;
+  position: relative;
+  z-index: 1;
 }
 
 .filter-checkboxes label {
@@ -38,6 +74,30 @@
   letter-spacing: 0.5px;
   min-width: 140px;
   justify-content: center;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+}
+
+.filter-checkboxes label::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s ease;
+}
+
+.filter-checkboxes label:hover::before {
+  left: 100%;
+}
+
+.filter-checkboxes label:hover {
+  transform: translateY(-3px) scale(1.05);
+  border-color: var(--color-accent);
+  box-shadow: 0 8px 25px rgba(31, 78, 121, 0.15);
 }
 
 .filter-checkboxes label.filter-any {
@@ -47,12 +107,22 @@
   font-weight: 700;
 }
 
+.filter-checkboxes label.filter-any:hover {
+  background: linear-gradient(45deg, #2a5d8a, var(--color-primary));
+  box-shadow: 0 8px 25px rgba(31, 78, 121, 0.3);
+}
+
 .filter-checkboxes input[type="checkbox"] {
   width: 18px;
   height: 18px;
   accent-color: var(--color-primary);
   cursor: pointer;
   border-radius: 4px;
+  transition: transform 0.2s ease;
+}
+
+.filter-checkboxes input[type="checkbox"]:checked {
+  transform: scale(1.2);
 }
 
 .filter-checkboxes input[type="checkbox"]:checked + span {
@@ -73,6 +143,33 @@
   display: block;
   margin: 0 auto;
   min-width: 200px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-filter::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.5s ease;
+}
+
+.btn-filter:active::before {
+  width: 300px;
+  height: 300px;
+}
+
+.btn-filter:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(31, 78, 121, 0.3);
+  background: linear-gradient(45deg, #2a5d8a, var(--color-primary));
 }
 
 .filter-error-message {
@@ -85,6 +182,12 @@
   border-radius: 12px;
   border-left: 5px solid var(--error-color);
   text-align: center;
+  transition: all 0.3s ease;
+}
+
+.filter-error-message:hover {
+  background: rgba(231, 76, 60, 0.15);
+  transform: scale(1.02);
 }
 
 .bookings-container {
@@ -105,6 +208,30 @@
   background: linear-gradient(45deg, rgba(31, 78, 121, 0.1), rgba(138, 191, 144, 0.1));
   border-radius: 16px;
   border-left: 5px solid var(--color-accent);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.status-title::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.6s ease;
+}
+
+.status-title:hover::before {
+  left: 100%;
+}
+
+.status-title:hover {
+  transform: scale(1.02);
+  border-left-color: var(--color-primary);
+  background: linear-gradient(45deg, rgba(31, 78, 121, 0.15), rgba(138, 191, 144, 0.15));
 }
 
 .status-group {
@@ -128,6 +255,28 @@
   display: flex;
   flex-direction: column;
   height: 100%; 
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  animation: cardSlideIn 0.5s ease both;
+}
+
+.bookings-container .card:nth-child(odd) { animation-delay: 0.1s; }
+.bookings-container .card:nth-child(even) { animation-delay: 0.2s; }
+
+@keyframes cardSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.bookings-container .card:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 15px 40px rgba(31, 78, 121, 0.2);
+  border-color: var(--color-accent);
 }
 
 .bookings-container .card-image-container {
@@ -142,7 +291,12 @@
   height: 100%;
   object-fit: contain; 
   object-position: center;
-  background: rgba(245, 247, 250, 0.5); 
+  background: rgba(245, 247, 250, 0.5);
+  transition: transform 0.5s ease;
+}
+
+.bookings-container .card:hover .card-image-container img {
+  transform: scale(1.05);
 }
 
 .bookings-container .card-content {
@@ -159,6 +313,11 @@
   margin-bottom: 15px;
   line-height: 1.3;
   text-align: center;
+  transition: color 0.3s ease;
+}
+
+.bookings-container .card:hover .card-header h3 {
+  color: var(--color-accent);
 }
 
 .bookings-container .card-details {
@@ -170,6 +329,12 @@
   background: rgba(245, 247, 250, 0.8);
   border-radius: 16px;
   border: 1px solid rgba(31, 78, 121, 0.1);
+  transition: all 0.3s ease;
+}
+
+.bookings-container .card:hover .card-details {
+  background: rgba(245, 247, 250, 1);
+  border-color: var(--color-accent);
 }
 
 .bookings-container .card-details .detail-item {
@@ -178,6 +343,12 @@
   background: white;
   border-radius: 10px;
   box-shadow: 0 2px 8px rgba(31, 78, 121, 0.05);
+  transition: all 0.3s ease;
+}
+
+.bookings-container .card:hover .card-details .detail-item {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(31, 78, 121, 0.1);
 }
 
 .bookings-container .card-details .detail-item p {
@@ -195,9 +366,14 @@
   font-size: 11px;
   display: block;
   margin-bottom: 5px;
+  transition: color 0.3s ease;
 }
 
-/* Status Styling Enhanced */
+.bookings-container .card:hover .card-details .detail-item strong {
+  color: var(--color-accent);
+}
+
+/* Enhanced Status Styling */
 .future {
   color: white;
   font-weight: 700;
@@ -209,6 +385,12 @@
   border-radius: 8px;
   display: inline-block;
   box-shadow: 0 2px 8px rgba(138, 191, 144, 0.3);
+  transition: all 0.3s ease;
+}
+
+.future:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 15px rgba(138, 191, 144, 0.4);
 }
 
 .current {
@@ -222,6 +404,13 @@
   border-radius: 8px;
   display: inline-block;
   box-shadow: 0 2px 8px rgba(243, 156, 18, 0.3);
+  transition: all 0.3s ease;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
 }
 
 .past {
@@ -235,87 +424,11 @@
   border-radius: 8px;
   display: inline-block;
   box-shadow: 0 2px 8px rgba(102, 102, 102, 0.3);
+  transition: all 0.3s ease;
 }
 
-/* Booking Cards Without Actions - אחיד לעתיד ועבר */
-.bookings-container .card.no-actions {
-  max-width: none;
-  margin: 0;
-  border-radius: 20px;
-  overflow: hidden;
-  background: var(--card-bg);
-  box-shadow: var(--card-shadow);
-  border: 1px solid var(--card-border);
-  display: flex;
-  flex-direction: column;
-  height: 100%; /* גובה אחיד לכל הכרטיסים */
-}
-
-.bookings-container .card.no-actions .card-image-container {
-  height: 200px;
-  position: relative;
-  overflow: hidden;
-  flex-shrink: 0; /* מונע התכווצות התמונה */
-}
-
-.bookings-container .card.no-actions .card-image-container img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain; /* תצוגה מלאה של התמונה ללא חיתוך */
-  object-position: center;
-  background: rgba(245, 247, 250, 0.5); /* רקע עדין אם התמונה לא ממלאת את כל השטח */
-}
-
-.bookings-container .card.no-actions .card-content {
-  padding: 25px;
-  padding-bottom: 30px; /* מקום נוסף בתחתית במקום card-actions */
-  flex-grow: 1; /* הכרטיס יתרחב לפי הצורך */
-  display: flex;
-  flex-direction: column;
-}
-
-.bookings-container .card.no-actions .card-header h3 {
-  color: var(--color-primary);
-  font-size: 20px;
-  font-weight: 700;
-  margin-bottom: 15px;
-  line-height: 1.3;
-}
-
-.bookings-container .card.no-actions .card-details {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 15px;
-  margin: 20px 0;
-  padding: 20px;
-  background: rgba(245, 247, 250, 0.8);
-  border-radius: 16px;
-  border: 1px solid rgba(31, 78, 121, 0.1);
-}
-
-.bookings-container .card.no-actions .card-details .detail-item {
-  text-align: center;
-  padding: 10px;
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(31, 78, 121, 0.05);
-}
-
-.bookings-container .card.no-actions .card-details .detail-item p {
-  margin: 0;
-  font-size: 14px;
-  color: var(--color-text);
-  line-height: 1.4;
-}
-
-.bookings-container .card.no-actions .card-details .detail-item strong {
-  color: var(--color-primary);
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  font-size: 11px;
-  display: block;
-  margin-bottom: 5px;
+.past:hover {
+  transform: scale(1.05);
 }
 
 /* Cancel Button Enhanced */
@@ -342,6 +455,33 @@
   width: 50%;
   box-shadow: 0 4px 15px rgba(231, 76, 60, 0.2);
   min-height: 44px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.cancelBtn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.5s ease;
+}
+
+.cancelBtn:active::before {
+  width: 200px;
+  height: 200px;
+}
+
+.cancelBtn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(231, 76, 60, 0.4);
+  background: linear-gradient(45deg, #c0392b, var(--error-color));
 }
 
 .no-bookings-message {
@@ -356,34 +496,147 @@
   margin: 40px auto;
   max-width: 600px;
   line-height: 1.6;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
 }
 
-/* Responsive Logo for Mobile - Global */
-.navbar .auth-section .btn-logout {
-  display: block;
+.no-bookings-message::before {
+  content: '📅';
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 48px;
+  opacity: 0.3;
+  transition: all 0.3s ease;
 }
 
-.navbar .site-branding {
-  display: none;
-  align-items: center;
-  gap: 10px;
-  color: var(--color-primary);
-  font-size: 18px;
-  font-weight: 700;
-  text-decoration: none;
+.no-bookings-message:hover {
+  border-color: var(--color-primary);
+  background: linear-gradient(45deg, rgba(255, 255, 255, 0.9), rgba(245, 247, 250, 0.8));
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(31, 78, 121, 0.1);
 }
 
-.navbar .site-branding .logo {
-  width: 32px;
-  height: 32px;
-  background: linear-gradient(45deg, var(--color-primary), var(--color-accent));
-  border-radius: 8px;
+.no-bookings-message:hover::before {
+  opacity: 0.5;
+  transform: translateX(-50%) scale(1.1);
+}
+
+/* Cards without actions - consistent styling */
+.bookings-container .card.no-actions {
+  max-width: none;
+  margin: 0;
+  border-radius: 20px;
+  overflow: hidden;
+  background: var(--card-bg);
+  box-shadow: var(--card-shadow);
+  border: 1px solid var(--card-border);
   display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-weight: 800;
-  font-size: 16px;
+  flex-direction: column;
+  height: 100%;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.bookings-container .card.no-actions:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 15px 40px rgba(31, 78, 121, 0.2);
+  border-color: var(--color-accent);
+}
+
+.bookings-container .card.no-actions .card-image-container {
+  height: 200px;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.bookings-container .card.no-actions .card-image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  background: rgba(245, 247, 250, 0.5);
+  transition: transform 0.5s ease;
+}
+
+.bookings-container .card.no-actions:hover .card-image-container img {
+  transform: scale(1.05);
+}
+
+.bookings-container .card.no-actions .card-content {
+  padding: 25px;
+  padding-bottom: 30px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.bookings-container .card.no-actions .card-header h3 {
+  color: var(--color-primary);
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 15px;
+  line-height: 1.3;
+  transition: color 0.3s ease;
+}
+
+.bookings-container .card.no-actions:hover .card-header h3 {
+  color: var(--color-accent);
+}
+
+.bookings-container .card.no-actions .card-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin: 20px 0;
+  padding: 20px;
+  background: rgba(245, 247, 250, 0.8);
+  border-radius: 16px;
+  border: 1px solid rgba(31, 78, 121, 0.1);
+  transition: all 0.3s ease;
+}
+
+.bookings-container .card.no-actions:hover .card-details {
+  background: rgba(245, 247, 250, 1);
+  border-color: var(--color-accent);
+}
+
+.bookings-container .card.no-actions .card-details .detail-item {
+  text-align: center;
+  padding: 10px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(31, 78, 121, 0.05);
+  transition: all 0.3s ease;
+}
+
+.bookings-container .card.no-actions:hover .card-details .detail-item {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(31, 78, 121, 0.1);
+}
+
+.bookings-container .card.no-actions .card-details .detail-item p {
+  margin: 0;
+  font-size: 14px;
+  color: var(--color-text);
+  line-height: 1.4;
+}
+
+.bookings-container .card.no-actions .card-details .detail-item strong {
+  color: var(--color-primary);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 11px;
+  display: block;
+  margin-bottom: 5px;
+  transition: color 0.3s ease;
+}
+
+.bookings-container .card.no-actions:hover .card-details .detail-item strong {
+  color: var(--color-accent);
 }
 
 @media (max-width: 768px) {
@@ -421,14 +674,10 @@
     padding: 15px 0;
   }
   
-  /* כרטיסים רגילים (עם כפתור ביטול) */
   .bookings-container .card-image-container {
     height: 160px;
   }
   
-  .bookings-container .card-image-container img {
-    object-fit: contain; /* שמירה על תצוגה מלאה גם בטאבלט */
-  }
   .bookings-container .card-details {
     grid-template-columns: 1fr;
     gap: 12px;
@@ -444,14 +693,10 @@
     padding: 20px;
   }
   
-  /* כרטיסים ללא פעולות (עבר ועתיד ללא ביטול) */
   .bookings-container .card.no-actions .card-image-container {
     height: 160px;
   }
   
-  .bookings-container .card.no-actions .card-image-container img {
-    object-fit: contain; /* שמירה על תצוגה מלאה גם בטאבלט */
-  }
   .bookings-container .card.no-actions .card-details {
     grid-template-columns: 1fr;
     gap: 12px;
@@ -476,15 +721,6 @@
   .no-bookings-message {
     padding: 80px 25px;
     font-size: 18px;
-  }
-  
-  /* Mobile Logo Switch */
-  .navbar .auth-section .btn-logout {
-    display: none;
-  }
-  
-  .navbar .site-branding {
-    display: flex;
   }
 }
 
@@ -523,13 +759,8 @@
     padding: 12px 0;
   }
   
-  /* כרטיסים רגילים */
   .bookings-container .card-image-container {
     height: 150px;
-  }
-  
-  .bookings-container .card-image-container img {
-    object-fit: contain; /* שמירה על תצוגה מלאה גם במובייל */
   }
   
   .bookings-container .card-content {
@@ -558,13 +789,8 @@
     font-size: 13px;
   }
   
-  /* כרטיסים ללא פעולות - Mobile */
   .bookings-container .card.no-actions .card-image-container {
     height: 150px;
-  }
-  
-  .bookings-container .card.no-actions .card-image-container img {
-    object-fit: contain; /* שמירה על תצוגה מלאה גם במובייל */
   }
   
   .bookings-container .card.no-actions .card-content {
@@ -595,7 +821,6 @@
     font-size: 13px;
   }
   
-  /* שאר הסטיילים */
   .card-actions {
     padding: 15px;
   }
@@ -613,16 +838,5 @@
   .filter-error-message {
     font-size: 14px;
     padding: 12px 15px;
-  }
-  
-  /* Mobile Logo Adjustments */
-  .navbar .site-branding {
-    font-size: 16px;
-  }
-  
-  .navbar .site-branding .logo {
-    width: 28px;
-    height: 28px;
-    font-size: 14px;
   }
 }

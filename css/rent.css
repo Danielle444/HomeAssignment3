@@ -114,21 +114,18 @@
   font-style: italic;
 }
 
-/* Credit Card Number Special Styling */
 #ccNumber {
   font-family: 'Courier New', monospace;
   letter-spacing: 1px;
   font-size: 18px;
 }
 
-/* ID Number Special Styling */
 #idNumber {
   font-family: 'Courier New', monospace;
   letter-spacing: 1px;
   font-size: 16px;
 }
 
-/* CVC Special Styling */
 #cvcNumber {
   font-family: 'Courier New', monospace;
   letter-spacing: 1px;
@@ -136,7 +133,6 @@
   text-align: center;
 }
 
-/* Expiry Date Group - הוספה חדשה */
 .expiry-date-group {
   display: flex;
   gap: 10px;
@@ -147,7 +143,6 @@
   padding: 16px 15px;
 }
 
-/* Booking Summary - הוספה חדשה */
 .booking-summary {
   background: linear-gradient(45deg, rgba(31, 78, 121, 0.05), rgba(138, 191, 144, 0.05));
   border: 2px solid var(--color-accent);
@@ -179,7 +174,6 @@
   font-size: 22px;
 }
 
-/* Submit Button */
 #bookNowBtn {
   background: linear-gradient(45deg, var(--color-primary), #2a5d8a);
   color: white;
@@ -206,7 +200,6 @@
   transform: none;
 }
 
-/* Message Styling */
 .message {
   text-align: center;
   padding: 15px 20px;
@@ -235,7 +228,6 @@
   color: var(--error-color);
 }
 
-/* Apartment Details */
 #apartmentDetails {
   max-width: none;
   margin: 0;
@@ -272,7 +264,6 @@
   font-size: 22px;
 }
 
-/* Date Picker Icon */
 input[type="date"] {
   position: relative;
 }
@@ -285,7 +276,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   border-radius: 4px;
 }
 
-/* Input Validation States */
 .form-group input.valid {
   border-color: var(--success-color);
   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="%238ABF90" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20,6 9,17 4,12"></polyline></svg>');
@@ -302,7 +292,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   background-size: 16px;
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
   #rentMainContainer {
     grid-template-columns: 1fr;
