@@ -129,7 +129,7 @@ function ShowBookings(bookingsToShow)
       let statusGroupContainer = null;
 
 
-sortedBookings.forEach(function (booking, index) {
+bookingsToShow.forEach(function (booking, index) {
 
 console.log(`check index ${index}`);
   let isFirstStatus = false;

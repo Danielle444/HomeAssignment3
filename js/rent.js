@@ -104,7 +104,7 @@ if (!selectedApt) {
         <div class="card-details">
           <div class="detail-item">
             <div class="detail-label">Price per night</div>
-            <div class="detail-value price-value">$${selectedApt.price}</div>
+            <div class="detail-value price-value">${selectedApt.price}</div>
           </div>
           <div class="detail-item">
             <div class="detail-label">Rating</div>
