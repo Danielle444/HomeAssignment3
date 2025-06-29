@@ -37,8 +37,39 @@
   gap: 25px;
 }
 
-.rent-form .form-group {
+.form-section-title {
+  margin: 30px 0 20px 0;
+  border-bottom: 2px solid var(--color-accent);
+  padding-bottom: 10px;
+}
+
+.form-section-title:first-of-type {
+  margin-top: 0;
+}
+
+.form-section-title h3 {
+  color: var(--color-primary);
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.form-group {
   margin-bottom: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group.half-width {
+  width: 100%;
 }
 
 .rent-form .form-group label {
@@ -52,7 +83,9 @@
 }
 
 .rent-form input[type="date"],
-.rent-form input[type="text"] {
+.rent-form input[type="text"],
+.rent-form input[type="email"],
+.rent-form select {
   width: 100%;
   padding: 16px 20px;
   border: 2px solid var(--input-border);
@@ -62,25 +95,91 @@
   background: var(--input-bg);
   outline: none;
   font-family: inherit;
+  transition: all 0.3s ease;
 }
 
 .rent-form input[type="date"]:focus,
-.rent-form input[type="text"]:focus {
+.rent-form input[type="text"]:focus,
+.rent-form input[type="email"]:focus,
+.rent-form select:focus {
   border-color: var(--input-border-focus);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(31, 78, 121, 0.1);
 }
 
 .rent-form input[type="date"]::placeholder,
-.rent-form input[type="text"]::placeholder {
+.rent-form input[type="text"]::placeholder,
+.rent-form input[type="email"]::placeholder {
   color: var(--input-placeholder);
   font-style: italic;
 }
 
+/* Credit Card Number Special Styling */
 #ccNumber {
   font-family: 'Courier New', monospace;
   letter-spacing: 1px;
   font-size: 18px;
 }
 
+/* ID Number Special Styling */
+#idNumber {
+  font-family: 'Courier New', monospace;
+  letter-spacing: 1px;
+  font-size: 16px;
+}
+
+/* CVC Special Styling */
+#cvcNumber {
+  font-family: 'Courier New', monospace;
+  letter-spacing: 1px;
+  font-size: 18px;
+  text-align: center;
+}
+
+/* Expiry Date Group - הוספה חדשה */
+.expiry-date-group {
+  display: flex;
+  gap: 10px;
+}
+
+.expiry-date-group select {
+  flex: 1;
+  padding: 16px 15px;
+}
+
+/* Booking Summary - הוספה חדשה */
+.booking-summary {
+  background: linear-gradient(45deg, rgba(31, 78, 121, 0.05), rgba(138, 191, 144, 0.05));
+  border: 2px solid var(--color-accent);
+  border-radius: 16px;
+  padding: 20px;
+  margin: 20px 0;
+  font-weight: 600;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  color: var(--color-text);
+}
+
+.summary-row.total {
+  border-top: 2px solid var(--color-primary);
+  margin-top: 10px;
+  padding-top: 15px;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.summary-row.total span:last-child {
+  color: var(--color-accent);
+  font-size: 22px;
+}
+
+/* Submit Button */
 #bookNowBtn {
   background: linear-gradient(45deg, var(--color-primary), #2a5d8a);
   color: white;
@@ -93,8 +192,21 @@
   letter-spacing: 1px;
   cursor: pointer;
   margin-top: 15px;
+  transition: all 0.3s ease;
 }
 
+#bookNowBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(31, 78, 121, 0.2);
+}
+
+#bookNowBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Message Styling */
 .message {
   text-align: center;
   padding: 15px 20px;
@@ -103,6 +215,7 @@
   font-size: 14px;
   margin-top: 20px;
   border: 2px solid transparent;
+  transition: all 0.3s ease;
 }
 
 .message:not(:empty) {
@@ -110,10 +223,25 @@
   border-color: var(--card-border);
 }
 
+.message.success {
+  background: rgba(138, 191, 144, 0.1);
+  border-color: var(--success-color);
+  color: var(--success-color);
+}
+
+.message.error {
+  background: rgba(231, 76, 60, 0.1);
+  border-color: var(--error-color);
+  color: var(--error-color);
+}
+
+/* Apartment Details */
 #apartmentDetails {
   max-width: none;
   margin: 0;
   height: fit-content;
+  position: sticky;
+  top: 20px;
 }
 
 #apartmentDetails .card-content {
@@ -144,6 +272,7 @@
   font-size: 22px;
 }
 
+/* Date Picker Icon */
 input[type="date"] {
   position: relative;
 }
@@ -156,6 +285,24 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   border-radius: 4px;
 }
 
+/* Input Validation States */
+.form-group input.valid {
+  border-color: var(--success-color);
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="%238ABF90" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20,6 9,17 4,12"></polyline></svg>');
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px;
+}
+
+.form-group input.invalid {
+  border-color: var(--error-color);
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="%23E74C3C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>');
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px;
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
   #rentMainContainer {
     grid-template-columns: 1fr;
@@ -178,8 +325,15 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     gap: 20px;
   }
   
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+  
   .rent-form input[type="date"],
-  .rent-form input[type="text"] {
+  .rent-form input[type="text"],
+  .rent-form input[type="email"],
+  .rent-form select {
     padding: 14px 18px;
     font-size: 16px;
   }
@@ -187,6 +341,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   #bookNowBtn {
     padding: 16px 28px;
     font-size: 15px;
+  }
+  
+  #apartmentDetails {
+    position: static;
   }
   
   #apartmentDetails .card-content {
@@ -199,6 +357,19 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   
   #apartmentDetails .card-description {
     font-size: 14px;
+  }
+
+  .booking-summary {
+    padding: 15px;
+    margin: 15px 0;
+  }
+
+  .summary-row.total {
+    font-size: 16px;
+  }
+
+  .summary-row.total span:last-child {
+    font-size: 20px;
   }
 }
 
@@ -216,8 +387,14 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     font-size: 22px;
   }
   
+  .form-section-title h3 {
+    font-size: 18px;
+  }
+  
   .rent-form input[type="date"],
-  .rent-form input[type="text"] {
+  .rent-form input[type="text"],
+  .rent-form input[type="email"],
+  .rent-form select {
     padding: 12px 16px;
     font-size: 15px;
   }
@@ -238,5 +415,21 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   #apartmentDetails .card-details {
     padding: 15px;
     margin: 20px 0;
+  }
+
+  .booking-summary {
+    padding: 12px;
+  }
+
+  .summary-row {
+    font-size: 14px;
+  }
+
+  .summary-row.total {
+    font-size: 15px;
+  }
+
+  .summary-row.total span:last-child {
+    font-size: 18px;
   }
 }
