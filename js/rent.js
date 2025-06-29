@@ -251,6 +251,38 @@ if (!selectedApt) {
   `;
 }
 
+//#endregion
+//#region 
+//בעת הזמנת מקום התאריכים שנבחרו משוריינים לימים מלאים
+function getUnavailableDates(listingId) {
+    const unavailable = [];
+    const bookings = getBookingsForListing(listingId);
+
+    bookings.forEach(function (booking) {
+        let current = new Date(booking.startDate);
+        const end = new Date(booking.endDate);
+
+        while (current <= end) {
+            const iso = current.toISOString().split("T")[0];
+            unavailable.push(iso);
+            current.setDate(current.getDate() + 1);
+        }
+    });
+
+    return unavailable;
+}
+//#endregion
+//#region נראה טוב עברתי
+function disableDates(input, unavailableDates) {
+  input.addEventListener("input", function () {
+    const selected = input.value;
+    if (unavailableDates.includes(selected)) {
+      alert("This date is already booked. Please choose another.");
+      input.value = "";
+    }
+  });
+}
+
 const rentForm = document.getElementById("rentForm");
 const startInput = document.getElementById("startDate");
 const endInput = document.getElementById("endDate");

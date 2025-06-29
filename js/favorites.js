@@ -71,7 +71,7 @@ function loadFavorites() {
         <div class="card-details">
           <div class="detail-item">
             <div class="detail-label">Price per night</div>
-            <div class="detail-value price-value">$${listing.price}</div>
+            <div class="detail-value price-value">${listing.price}</div>
           </div>
           <div class="detail-item">
             <div class="detail-label">Rating</div>
