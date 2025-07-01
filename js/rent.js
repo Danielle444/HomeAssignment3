@@ -402,6 +402,5 @@ rentForm.addEventListener("submit", function (event) {
       window.location.href = "mybookings.html";
     }
   }, 500);
-});
+}});
 
-//#endregion
