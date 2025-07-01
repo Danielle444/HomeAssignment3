@@ -222,6 +222,13 @@
   cursor: pointer;
 }
 
+.price-display {
+  font-weight: 600;
+  color: var(--color-primary);
+  font-size: 14px;
+  margin-top: 5px;
+}
+
 @media (max-width: 768px) {
   .hero-section {
     grid-template-columns: 1fr;
@@ -241,4 +248,3 @@
     margin-top: 20px;
   }
 }
-
