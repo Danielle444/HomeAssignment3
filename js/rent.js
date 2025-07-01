@@ -337,7 +337,6 @@ rentForm.addEventListener("submit", function (event) {
   const expiryYear = document.getElementById('expiryYear').value;
   const email = document.getElementById('email').value.trim();
 
-  // 1. בדיקת תאריכים
   if (!startDate || !endDate) {
     errors.push("Please select check-in and check-out dates.");
   } else {
@@ -354,7 +353,6 @@ rentForm.addEventListener("submit", function (event) {
     }
   }
 
-  // 2. בדיקות שדות נוספים
   if (!validateCardholderName(cardholderName)) {
     errors.push("Please enter a valid cardholder name (English letters only).");
   }
@@ -374,7 +372,6 @@ rentForm.addEventListener("submit", function (event) {
     errors.push("Please enter a valid email address.");
   }
 
-  // 3. בדיקת זמינות (רק אם אין שגיאות אחרות)
   if (errors.length === 0) {
     const isAvailable = checkAvailability(listingId, startDate, endDate);
     if (!isAvailable) {
@@ -382,13 +379,11 @@ rentForm.addEventListener("submit", function (event) {
     }
   }
   
-  // 4. הצגת שגיאה ראשונה אם קיימת
   if (errors.length > 0) {
     showNotification(errors[0], 'error');
     return;
-  } // <--- ### התיקון כאן: הוספת סוגר מסולסל שובר את השגיאה ###
+  } 
 
-  // 5. אם הכל תקין - קוד זה ירוץ רק אם לא נמצאו שגיאות
   const newBooking = {
     listingId: listingId,
     startDate: startDate,
