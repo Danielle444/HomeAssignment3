@@ -401,11 +401,10 @@ rentForm.addEventListener("submit", function (event) {
   rentForm.reset();
   document.getElementById("bookingSummary").style.display = "none";
 
-  setTimeout(function () {
-    if (
-      confirm("Your booking was saved! Would you like to view your bookings?")
-    ) {
-      window.location.href = "mybookings.html";
-    }
-  }, 500);
+showNotification("Your booking has been saved! Redirecting...", "success");
+
+setTimeout(function () {
+  window.location.href = "mybookings.html";
+}, 2500);
+
 });
