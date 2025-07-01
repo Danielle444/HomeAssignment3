@@ -649,13 +649,6 @@ body {
   align-items: stretch;
 }
 
-.favorites-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: 30px;
-  padding: 20px 0;
-  align-items: stretch;
-}
 
 .form-group {
   margin-bottom: 20px;
@@ -730,21 +723,6 @@ body {
 .main-footer p {
   font-size: 14px;
   margin: 0;
-}
-
-.no-favorites-message,
-.no-bookings-message {
-  grid-column: 1 / -1;
-  text-align: center;
-  padding: 80px 20px;
-  background: var(--card-bg);
-  border-radius: 20px;
-  border: 2px dashed var(--card-border);
-  color: var(--color-text-light);
-  font-size: 18px;
-  max-width: 500px;
-  margin: 0 auto;
-  transition: all 0.3s ease;
 }
 
 .no-favorites-message:hover,
