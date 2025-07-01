@@ -1,19 +1,19 @@
 const currentUser = getCurrentUserOrRedirect();
 const favoritesKey = getUserFavoritesKey(currentUser);
-//#region כל הכבוד עמית איפה מוגדר 
+
 document.addEventListener("DOMContentLoaded", function () {
   loadFavorites();
 });
+
 function toggleFavorite(button, listingId) {
   let favorites = JSON.parse(localStorage.getItem(favoritesKey)) || [];
 
   listingId = Number(listingId);
-  const index = favorites.indexOf(listingId);//מוצא אינדקס לפי ID
+  const index = favorites.indexOf(listingId);
 
   if (index === -1) {
     favorites.push(listingId);
     button.className = "card-btn btn-favorite favorited";
-
     button.setAttribute('aria-label', 'Remove from favorites');
   } else {
     favorites.splice(index, 1);
@@ -25,6 +25,32 @@ function toggleFavorite(button, listingId) {
 
   if (window.location.href.includes("favorites.html")) {
     loadFavorites();
+  }
+}
+
+function cleanDescription(text) {
+  return text
+    .replace(/<br\s*\/?>/gi, ' ')
+    .replace(/<[^>]*>/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function toggleDescription(event) {
+  event.preventDefault();
+  event.stopPropagation();
+  
+  const button = event.target;
+  const descriptionContainer = button.previousElementSibling;
+  const isExpanded = button.textContent === 'Show Less';
+  
+  if (isExpanded) {
+    descriptionContainer.style.display = 'none';
+    button.textContent = 'Show More';
+  } else {
+    descriptionContainer.style.display = 'block';
+    descriptionContainer.textContent = button.dataset.fullText;
+    button.textContent = 'Show Less';
   }
 }
 
@@ -58,6 +84,28 @@ function loadFavorites() {
       Math.round(listing.review_scores_rating) : 0;
     const stars = "★".repeat(rating) + "☆".repeat(5 - rating);
 
+    const fullDescription = cleanDescription(listing.description);
+    
+    // Create bedrooms display with bed icons
+    let bedroomsHTML = '';
+    if (listing.bedrooms && listing.bedrooms > 0) {
+      const bedIcons = '🛏️'.repeat(Math.min(listing.bedrooms, 5)); // Max 5 icons for display
+      const bedroomsText = listing.bedrooms === 1 ? 'bedroom' : 'bedrooms';
+      bedroomsHTML = `
+        <div class="card-bedrooms">
+          <span class="bedrooms-icons">${bedIcons}</span>
+          <span class="bedrooms-text">${listing.bedrooms} ${bedroomsText}</span>
+        </div>
+      `;
+    } else {
+      bedroomsHTML = `
+        <div class="card-bedrooms">
+          <span class="bedrooms-icons">❓</span>
+          <span class="bedrooms-text">Bedrooms info not available</span>
+        </div>
+      `;
+    }
+
     card.innerHTML = `
       <div class="card-image-container">
         <img src="${listing.picture_url}" alt="${listing.name}" loading="lazy" />
@@ -67,7 +115,9 @@ function loadFavorites() {
           <h3>${listing.name}</h3>
         </div>
         <a href="${listing.listing_url}" class="card-url" target="_blank" rel="noopener">View Original Listing</a>
-        <p class="card-description">${listing.description}</p>
+        ${bedroomsHTML}
+        <p class="card-description" style="display: none;"></p>
+        <button class="btn-toggle-description card-btn" data-full-text="${fullDescription}">Show More</button>
         <div class="card-details">
           <div class="detail-item">
             <div class="detail-label">Price per night</div>
@@ -88,5 +138,10 @@ function loadFavorites() {
       </div>
     `;
     favoritesContainer.appendChild(card);
+  });
+
+  const toggleButtons = document.querySelectorAll('.btn-toggle-description');
+  toggleButtons.forEach(function(button) {
+    button.addEventListener('click', toggleDescription);
   });
 }

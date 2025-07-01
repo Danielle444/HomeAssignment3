@@ -110,12 +110,6 @@
   object-fit: cover;
   border-radius: 20px;
   box-shadow: 0 10px 30px rgba(31, 78, 121, 0.2);
-  transition: all 0.5s ease;
-}
-
-.amsterdam-image:hover {
-  transform: scale(1.02) rotate(1deg);
-  box-shadow: 0 15px 40px rgba(31, 78, 121, 0.25);
 }
 
 .filters-section {
