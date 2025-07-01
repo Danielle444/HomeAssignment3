@@ -151,7 +151,7 @@ document.addEventListener("DOMContentLoaded", function () {
       
       let bedroomsHTML = '';
       if (listing.bedrooms && listing.bedrooms > 0) {
-        const bedIcons = '🛏️'.repeat(Math.min(listing.bedrooms, 5)); // Max 5 icons for display
+        const bedIcons = '🛏️'.repeat(Math.min(listing.bedrooms, 5)); 
         const bedroomsText = listing.bedrooms === 1 ? 'bedroom' : 'bedrooms';
         bedroomsHTML = `
           <div class="card-bedrooms">
