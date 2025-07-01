@@ -2,6 +2,16 @@ document.addEventListener("DOMContentLoaded", function () {
   console.log(amsterdam);
   const rentals = amsterdam;
   
+  const navToggle = document.getElementById('navToggle');
+  const navMenu = document.getElementById('navMenu');
+  
+  if (navToggle && navMenu) {
+    navToggle.addEventListener('click', function() {
+      navToggle.classList.toggle('active');
+      navMenu.classList.toggle('active');
+    });
+  }
+  
   const countHeader = document.getElementById("countRentals");
   const totalHeader = document.createElement("h4");
   totalHeader.textContent = `Discover ${rentals.length} unique properties waiting for you`;
@@ -101,6 +111,32 @@ document.addEventListener("DOMContentLoaded", function () {
     ratingSelect.appendChild(opt);
   });
 
+  function cleanDescription(text) {
+    return text
+      .replace(/<br\s*\/?>/gi, ' ')
+      .replace(/<[^>]*>/g, '')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  function toggleDescription(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    
+    const button = event.target;
+    const descriptionContainer = button.previousElementSibling;
+    const isExpanded = button.textContent === 'Show Less';
+    
+    if (isExpanded) {
+      descriptionContainer.style.display = 'none';
+      button.textContent = 'Show More';
+    } else {
+      descriptionContainer.style.display = 'block';
+      descriptionContainer.textContent = button.dataset.fullText;
+      button.textContent = 'Show Less';
+    }
+  }
+
   function displayResults(filtered) {
     const resultsSection = document.getElementById("results");
     resultsSection.innerHTML = "";
@@ -116,9 +152,30 @@ document.addEventListener("DOMContentLoaded", function () {
       const favText = isFav ? "Remove from Favorites" : "Add to Favorites";
       const favClass = isFav ? "favorited" : "";
 
-            const rating = listing.review_scores_rating ? 
+      const rating = listing.review_scores_rating ? 
         Math.round(listing.review_scores_rating) : 0;
       const stars = "★".repeat(rating) + "☆".repeat(5 - rating);
+
+      const fullDescription = cleanDescription(listing.description);
+      
+      let bedroomsHTML = '';
+      if (listing.bedrooms && listing.bedrooms > 0) {
+        const bedIcons = '🛏️'.repeat(Math.min(listing.bedrooms, 5)); // Max 5 icons for display
+        const bedroomsText = listing.bedrooms === 1 ? 'bedroom' : 'bedrooms';
+        bedroomsHTML = `
+          <div class="card-bedrooms">
+            <span class="bedrooms-icons">${bedIcons}</span>
+            <span class="bedrooms-text">${listing.bedrooms} ${bedroomsText}</span>
+          </div>
+        `;
+      } else {
+        bedroomsHTML = `
+          <div class="card-bedrooms">
+            <span class="bedrooms-icons">❓</span>
+            <span class="bedrooms-text">Bedrooms info not available</span>
+          </div>
+        `;
+      }
 
       card.innerHTML = `
         <div class="card-image-container">
@@ -131,7 +188,9 @@ document.addEventListener("DOMContentLoaded", function () {
             <span class="card-id">ID: ${listing.listing_id}</span>
           </div>
           <a href="${listing.listing_url}" class="card-url" target="_blank" rel="noopener">View Original Listing</a>
-          <p class="card-description">${listing.description}</p>
+          ${bedroomsHTML}
+          <p class="card-description" style="display: none;"></p>
+          <button class="btn-toggle-description card-btn" data-full-text="${fullDescription}">Show More</button>
           <div class="card-details">
             <div class="detail-item">
               <div class="detail-label">Price per night</div>
@@ -154,6 +213,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
       resultsSection.appendChild(card);
     });
+
+    const toggleButtons = document.querySelectorAll('.btn-toggle-description');
+    toggleButtons.forEach(function(button) {
+      button.addEventListener('click', toggleDescription);
+    });
   }
 
   function filterRentals() {
@@ -164,7 +228,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (minPrice > maxPrice) {
       alert(
-        "The minimun price can't be larger than the maximum price filtered"
+        "The minimum price can't be larger than the maximum price filtered"
       );
       return;
     }
