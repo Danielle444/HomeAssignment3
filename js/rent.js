@@ -380,8 +380,9 @@ rentForm.addEventListener("submit", function (event) {
   }
   
   if (errors.length > 0) {
-    showNotification(errors[0], 'error'); [cite_start]
-    return; 
+    showNotification(errors[0], 'error');
+    return;
+  } 
 
   const newBooking = {
     listingId: listingId,
@@ -402,5 +403,4 @@ rentForm.addEventListener("submit", function (event) {
       window.location.href = "mybookings.html";
     }
   }, 500);
-}});
-
+});
