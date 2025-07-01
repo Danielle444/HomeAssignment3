@@ -17,4 +17,5 @@ function initMobileNavigation() {
     });
   }
 }
+
 document.addEventListener('DOMContentLoaded', initMobileNavigation);
