@@ -1,4 +1,3 @@
-//#region עברתי ונראה טוב
 //  ניהול תהליך השכרה של דירה אחת
 
 /**
@@ -73,9 +72,39 @@ function formatDateForDisplay(dateString) {
     return `${day}/${month}/${year}`;
 }
 
-//#endregion
+/**
+ * מציגה הודעת התראה למשתמש.
+ * @param {string} message - ההודעה להצגה.
+ * @param {string} type - סוג ההודעה.
+ */
+function showNotification(message, type = 'error') {
+  const existingNotification = document.getElementById('notification');
+  if (existingNotification) {
+    existingNotification.remove();
+  }
 
-//#region צריך להאפיר את התאריכים שנכנסים למערך CSS
+  const notification = document.createElement('div');
+  notification.id = 'notification';
+  notification.className = `notification notification-${type}`;
+  notification.textContent = message;
+
+  document.body.appendChild(notification);
+
+  setTimeout(() => {
+    notification.classList.add('show');
+  }, 100);
+
+  setTimeout(() => {
+    notification.classList.remove('show');
+    setTimeout(() => {
+      if (notification.parentNode) {
+        notification.remove();
+      }
+    }, 500);
+  }, 3000);
+}
+
+
 //בעת הזמנת מקום התאריכים שנבחרו משוריינים לימים מלאים
 function getUnavailableDates(listingId) {
     const unavailable = [];
@@ -94,8 +123,7 @@ function getUnavailableDates(listingId) {
 
     return unavailable;
 }
-//#endregion
-//#region נראה טוב עברתי
+
 function disableDates(input, unavailableDates) {
   input.addEventListener("input", function () {
     const selected = input.value;
@@ -105,8 +133,7 @@ function disableDates(input, unavailableDates) {
     }
   });
 }
-//#endregion
-//#region
+
 function validateCardholderName(name) {
     const nameRegex = /^[A-Za-z\s]+$/;
     return nameRegex.test(name.trim()) && name.trim().length >= 2;
@@ -179,7 +206,6 @@ function updateBookingSummary() {
     
     summaryDiv.style.display = 'block';
 }
-//#endregion
 
 
 const params = new URLSearchParams(location.search);
@@ -188,7 +214,6 @@ const selectedApt = amsterdam.find(function (apt) {
   return apt.listing_id === listingId;
 });
 
-//good
 const container = document.getElementById("apartmentDetails");
 
 if (!selectedApt) {
@@ -236,7 +261,6 @@ const unavailableDates = getUnavailableDates(listingId);
 disableDates(startInput, unavailableDates);
 disableDates(endInput, unavailableDates);
 
-//#region הוספה חדשה - input formatting
 const yearSelect = document.getElementById('expiryYear');
 const currentYear = new Date().getFullYear();
 for (let year = currentYear; year <= currentYear + 10; year++) {
@@ -263,7 +287,6 @@ cvcInput.addEventListener("input", function () {
     let rawValue = cvcInput.value.replace(/\D/g, "").slice(0, 3);
     cvcInput.value = rawValue;
 });
-//#endregion
 
 function validateDatesLive() {
   const startDate = startInput.value;
@@ -302,85 +325,63 @@ endInput.addEventListener("change", validateDatesLive);
 rentForm.addEventListener("submit", function (event) {
   event.preventDefault();
 
+  const errors = []; 
+
   const startDate = startInput.value;
   const endDate = endInput.value;
   const cardholderName = document.getElementById('cardholderName').value.trim();
   const idNumber = document.getElementById('idNumber').value.trim();
-  const ccNumber = ccInput.value;
+  const ccNumber = ccInput.value.replace(/\s/g, "");
   const cvcNumber = document.getElementById('cvcNumber').value.trim();
   const expiryMonth = document.getElementById('expiryMonth').value;
   const expiryYear = document.getElementById('expiryYear').value;
   const email = document.getElementById('email').value.trim();
 
   if (!startDate || !endDate) {
-    message.textContent = "Please select check-in and check-out dates.";
-    message.style.color = "red";
-    return;
+    errors.push("Please select check-in and check-out dates.");
+  } else {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+
+    if (start < today) {
+      errors.push("Start date must be today or later.");
+    }
+    if (start >= end) {
+      errors.push("End date must be after start date.");
+    }
   }
-
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  const start = new Date(startDate);
-  const end = new Date(endDate);
-
-  if (start < today) {
-    message.textContent = "Start date must be today or later.";
-    message.style.color = "red";
-    return;
-  }
-
-  if (start >= end) {
-    message.textContent = "End date must be after start date.";
-    message.style.color = "red";
-    return;
-  }
-
-  if (message.textContent !== "" && message.style.color === "red") return;
 
   if (!validateCardholderName(cardholderName)) {
-    message.textContent = "Please enter a valid cardholder name (English letters only).";
-    message.style.color = "red";
-    return;
+    errors.push("Please enter a valid cardholder name (English letters only).");
   }
-
   if (!validateIdNumber(idNumber)) {
-    message.textContent = "Please enter a valid 9-digit ID number.";
-    message.style.color = "red";
-    return;
+    errors.push("Please enter a valid 9-digit ID number.");
   }
-
+  if (!/^\d{16}$/.test(ccNumber)) {
+    errors.push("Please enter a valid 16-digit credit card number.");
+  }
   if (!validateCVC(cvcNumber)) {
-    message.textContent = "Please enter a valid 3-digit CVC.";
-    message.style.color = "red";
-    return;
+    errors.push("Please enter a valid 3-digit CVC.");
   }
-
   if (!validateExpiryDate(expiryMonth, expiryYear)) {
-    message.textContent = "Please select a valid expiry date.";
-    message.style.color = "red";
-    return;
+    errors.push("Please select a valid expiry date.");
   }
-
   if (!validateEmail(email)) {
-    message.textContent = "Please enter a valid email address.";
-    message.style.color = "red";
-    return;
+    errors.push("Please enter a valid email address.");
   }
 
-  const cleanCC = ccNumber.replace(/\s/g, ""); 
-
-  if (!/^\d{16}$/.test(cleanCC)) {
-    message.textContent = "Please enter a valid 16-digit credit card number.";
-    message.style.color = "red";
-    return;
+  if (errors.length === 0) {
+    const isAvailable = checkAvailability(listingId, startDate, endDate);
+    if (!isAvailable) {
+      errors.push(`Sorry, the property is booked on the ${datesOcupide}.`);
+    }
   }
-
-  const isAvailable = checkAvailability(listingId, startDate, endDate);
-  if (!isAvailable) {
-    message.textContent = `Sorry, the property is booked on the ${datesOcupide}.`;
-    message.style.color = "red";
-    return;
-  }
+  
+  if (errors.length > 0) {
+    showNotification(errors[0], 'error'); [cite_start]
+    return; 
 
   const newBooking = {
     listingId: listingId,
@@ -392,16 +393,14 @@ rentForm.addEventListener("submit", function (event) {
   previousBookings.push(newBooking);
   localStorage.setItem(bookingsKey, JSON.stringify(previousBookings));
 
-  message.textContent = "Your booking has been saved!";
-  message.style.color = "green";
+  showNotification("Your booking has been saved!", "success");
   rentForm.reset();
+  document.getElementById('bookingSummary').style.display = 'none';
 
   setTimeout(function () {
-    if (
-      confirm("Your booking was saved! Would you like to view your bookings?")
-    ) {
+    if (confirm("Your booking was saved! Would you like to view your bookings?")) {
       window.location.href = "mybookings.html";
     }
-  }, 300);
-});
-//#endregion
+  }, 500);
+}});
+

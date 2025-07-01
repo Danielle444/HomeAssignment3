@@ -51,14 +51,14 @@
           <h2>Complete Your Booking</h2>
 
           <form id="rentForm" class="rent-form">
-            <div class="form-group">
+            <div class="input-group">
               <label for="startDate">Check-in Date</label>
-              <input type="date" id="startDate" name="startDate"/>
+              <input type="date" id="startDate" name="startDate" class="form-input" />
             </div>
 
-            <div class="form-group">
+            <div class="input-group">
               <label for="endDate">Check-out Date</label>
-              <input type="date" id="endDate" name="endDate"/>
+              <input type="date" id="endDate" name="endDate" class="form-input" />
             </div>
 
             <div class="booking-summary" id="bookingSummary" style="display: none;">
@@ -76,55 +76,59 @@
               </div>
             </div>
 
-            <div class="form-group">
+            <div class="input-group">
               <label for="cardholderName">Cardholder Name</label>
               <input
                 type="text"
                 id="cardholderName"
                 name="cardholderName"
+                class="form-input"
                 placeholder="John Doe"
               />
             </div>
 
-            <div class="form-group">
+            <div class="input-group">
               <label for="idNumber">ID Number</label>
               <input
                 type="text"
                 id="idNumber"
                 name="idNumber"
+                class="form-input"
                 maxlength="9"
                 placeholder="123456789"
               />
             </div>
 
-            <div class="form-group">
+            <div class="input-group">
               <label for="ccNumber">Credit Card Number</label>
               <input
                 type="text"
                 id="ccNumber"
                 name="ccNumber"
+                class="form-input"
                 maxlength="19"
                 inputmode="numeric"
                 placeholder="1234 5678 9012 3456"
               />
             </div>
 
-            <div class="form-group">
+            <div class="input-group">
               <label for="cvcNumber">CVC</label>
               <input
                 type="text"
                 id="cvcNumber"
                 name="cvcNumber"
+                class="form-input"
                 maxlength="3"
                 inputmode="numeric"
                 placeholder="123"
               />
             </div>
 
-            <div class="form-group">
+            <div class="input-group">
               <label>Expiry Date</label>
               <div class="expiry-date-group">
-                <select id="expiryMonth" name="expiryMonth">
+                <select id="expiryMonth" name="expiryMonth" class="form-input">
                   <option value="">Month</option>
                   <option value="01">01</option>
                   <option value="02">02</option>
@@ -139,27 +143,25 @@
                   <option value="11">11</option>
                   <option value="12">12</option>
                 </select>
-                <select id="expiryYear" name="expiryYear">
+                <select id="expiryYear" name="expiryYear" class="form-input">
                   <option value="">Year</option>
                 </select>
               </div>
             </div>
 
-            <div class="form-group">
+            <div class="input-group">
               <label for="email">Email Address</label>
               <input
                 type="text"
                 id="email"
                 name="email"
-
+                class="form-input"
                 placeholder="your.email@example.com"
               />
             </div>
 
-            <button type="submit" id="bookNowBtn">Book Now</button>
+            <button type="submit" id="bookNowBtn" class="btn btn-primary">Book Now</button>
           </form>
-
-          <p id="bookingMessage" class="message"></p>
         </section>
         
         <section id="apartmentDetails" class="card"></section>
@@ -170,7 +172,6 @@
       <p>Created by Amit Hoffman, Danielle Kaneti and Oren Ahuvia</p>
       <p>&copy; 2025 Amsterdam Rentals. All rights reserved.</p>
     </footer>
-
 
     <script src="js/data/amsterdam.js"></script>
     <script src="js/storage.js"></script>
