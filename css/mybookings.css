@@ -373,7 +373,6 @@
   color: var(--color-accent);
 }
 
-/* Enhanced Status Styling */
 .future {
   color: white;
   font-weight: 700;
@@ -431,7 +430,6 @@
   transform: scale(1.05);
 }
 
-/* Cancel Button Enhanced */
 .card-actions {
   padding: 20px 25px;
   background: rgba(245, 247, 250, 0.3);
@@ -524,7 +522,6 @@
   transform: translateX(-50%) scale(1.1);
 }
 
-/* Cards without actions - consistent styling */
 .bookings-container .card.no-actions {
   max-width: none;
   margin: 0;
