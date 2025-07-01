@@ -1,5 +1,39 @@
 @import url(variables.css);
 
+
+.notification {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-100px);
+  background: var(--card-bg);
+  color: var(--color-text);
+  padding: 15px 25px;
+  border-radius: 12px;
+  box-shadow: var(--card-shadow);
+  border-left: 4px solid var(--success-color);
+  z-index: 1000;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.notification.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+.notification-success {
+  border-left-color: var(--success-color);
+}
+
+.notification-error {
+  border-left-color: var(--error-color);
+}
+
+.notification-warning {
+  border-left-color: var(--warning-color);
+}
+
 * {
   margin: 0;
   padding: 0;
