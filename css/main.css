@@ -101,7 +101,7 @@ body {
 }
 
 .nav-link::before {
-  content: '';
+  content: "";
   position: absolute;
   bottom: 0;
   left: 50%;
@@ -270,13 +270,17 @@ body {
 }
 
 .card-image-container::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(135deg, transparent 0%, rgba(31, 78, 121, 0.1) 100%);
+  background: linear-gradient(
+    135deg,
+    transparent 0%,
+    rgba(31, 78, 121, 0.1) 100%
+  );
   opacity: 0;
   transition: opacity 0.3s ease;
   z-index: 1;
@@ -438,7 +442,7 @@ body {
 }
 
 .card-btn::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 50%;
   left: 50%;
@@ -565,24 +569,25 @@ body {
 .btn-primary:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(31, 78, 121, 0.2);
-  background: linear-gradient(45deg, var(--color-primary), var(--btn-primary-bg));
+  background: linear-gradient(
+    45deg,
+    var(--color-primary),
+    var(--btn-primary-bg)
+  );
 }
 
 .main-footer {
   background: var(--color-primary);
-  color: white;
+  color: rgba(255, 255, 255, 0.9);
   margin-top: 60px;
   text-align: center;
-  padding: 20px;
-}
-
-.footer-bottom {
+  padding: 10px;
   max-width: 1200px;
-  margin: 0 auto;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.footer-bottom p {
-  color: rgba(255, 255, 255, 0.9);
+.main-footer p {
   font-size: 14px;
   margin: 0;
 }
@@ -852,7 +857,11 @@ body {
 .card-bedrooms {
   margin: 15px 0;
   padding: 12px 16px;
-  background: linear-gradient(135deg, rgba(31, 78, 121, 0.1) 0%, rgba(138, 191, 144, 0.15) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(31, 78, 121, 0.1) 0%,
+    rgba(138, 191, 144, 0.15) 100%
+  );
   border-radius: 12px;
   border: 2px solid rgba(138, 191, 144, 0.3);
   display: flex;
@@ -864,13 +873,18 @@ body {
 }
 
 .card-bedrooms::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(138, 191, 144, 0.1), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(138, 191, 144, 0.1),
+    transparent
+  );
   transition: left 0.8s ease;
 }
 
@@ -920,21 +934,21 @@ body {
     font-size: 12px;
     margin: 8px 0 12px 0;
   }
-  
+
   .card-bedrooms {
     padding: 10px 14px;
     margin: 12px 0;
     gap: 10px;
   }
-  
+
   .bedrooms-icons {
     font-size: 16px;
   }
-  
+
   .bedrooms-text {
     font-size: 13px;
   }
-  
+
   .card-description {
     font-size: 13px;
     padding: 12px;
@@ -948,7 +962,7 @@ body {
     font-size: 11px;
     margin: 6px 0 10px 0;
   }
-  
+
   .card-bedrooms {
     padding: 8px 12px;
     margin: 10px 0;
@@ -956,15 +970,15 @@ body {
     flex-direction: column;
     text-align: center;
   }
-  
+
   .bedrooms-icons {
     font-size: 15px;
   }
-  
+
   .bedrooms-text {
     font-size: 12px;
   }
-  
+
   .card-description {
     font-size: 12px;
     padding: 10px;

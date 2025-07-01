@@ -14,13 +14,17 @@
         <div class="nav-brand">
           <span class="brand-text">Amsterdam Rentals</span>
         </div>
-        
-        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+
+        <button
+          class="nav-toggle"
+          id="navToggle"
+          aria-label="Toggle navigation"
+        >
           <span class="hamburger-line"></span>
           <span class="hamburger-line"></span>
           <span class="hamburger-line"></span>
         </button>
-        
+
         <div class="nav-menu" id="navMenu">
           <a href="index.html" class="nav-link">Home</a>
           <a href="favorites.html" class="nav-link">Favorites</a>
@@ -38,13 +42,19 @@
       <section class="hero-section">
         <div class="hero-content">
           <h1 class="page-title">Discover Amsterdam</h1>
-          <p class="hero-subtitle">Find your perfect rental in the heart of the Netherlands</p>
+          <p class="hero-subtitle">
+            Find your perfect rental in the heart of the Netherlands
+          </p>
           <div class="rentals-count">
             <h3 id="countRentals">Loading amazing properties...</h3>
           </div>
         </div>
         <div class="hero-image">
-          <img src="images/Bird-Eye.jpg" alt="Beautiful Amsterdam canal view" class="amsterdam-image" />
+          <img
+            src="images/Bird-Eye.jpg"
+            alt="Beautiful Amsterdam canal view"
+            class="amsterdam-image"
+          />
         </div>
       </section>
 
@@ -53,23 +63,40 @@
           <h2>Find Your Perfect Stay</h2>
           <p>Use our filters to discover exactly what you're looking for</p>
         </div>
-        
+
         <div class="filters-container">
           <div class="filter-group">
             <h3 class="filter-label">Min Rating</h3>
-            <select class="filter-select" id="slctMinRating" name="Rating">
-            </select>
+            <select
+              class="filter-select"
+              id="slctMinRating"
+              name="Rating"
+            ></select>
           </div>
 
           <div class="filter-group">
             <h3 class="filter-label">Min Price</h3>
-            <input type="range" class="filter-range" id="rngMinPrice" min="0" max="1000" value="0" />
+            <input
+              type="range"
+              class="filter-range"
+              id="rngMinPrice"
+              min="0"
+              max="1000"
+              value="0"
+            />
             <span class="price-display" id="displayMin">€0</span>
           </div>
 
           <div class="filter-group">
             <h3 class="filter-label">Max Price</h3>
-            <input type="range" class="filter-range" id="rngMaxPrice" min="0" max="1000" value="1000" />
+            <input
+              type="range"
+              class="filter-range"
+              id="rngMaxPrice"
+              min="0"
+              max="1000"
+              value="1000"
+            />
             <span class="price-display" id="displayMax">€1000</span>
           </div>
 
@@ -92,10 +119,9 @@
     </main>
 
     <footer class="main-footer">
-      <div class="footer-bottom">Created by Amit Hoffman, Danielle Kaneti and Oren Ahuvia</p>
-    <p>&copy; 2025 Amsterdam Rentals. All rights reserved.</p>
-  </div>
-</footer>
+      <p>Created by Amit Hoffman, Danielle Kaneti and Oren Ahuvia</p>
+      <p>&copy; 2025 Amsterdam Rentals. All rights reserved.</p>
+    </footer>
 
     <script src="js/data/amsterdam.js"></script>
     <script src="js/storage.js"></script>

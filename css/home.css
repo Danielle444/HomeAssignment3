@@ -221,3 +221,24 @@
   background: var(--color-primary);
   cursor: pointer;
 }
+
+@media (max-width: 768px) {
+  .hero-section {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .hero-content {
+    order: 1;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .hero-image {
+    order: 2;
+    margin-top: 20px;
+  }
+}
+
