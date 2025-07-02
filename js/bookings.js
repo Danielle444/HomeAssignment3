@@ -1,7 +1,5 @@
-//  הוספה/ביטול השכרות, לפי currentUser
 document.addEventListener("DOMContentLoaded", function () {
   
-  // Debug localStorage
   console.log("All localStorage keys:", Object.keys(localStorage));
   
   const currentUser = getCurrentUserOrRedirect();
@@ -24,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
   return newDate;
 }
 
-const today = getStartOfDay(new Date()); // היום, בשעת חצות
+const today = getStartOfDay(new Date());
 const currentBookings = [];
 const futureBookings = [];
 const pastBookings = [];
@@ -64,7 +62,7 @@ const filterCheckboxContainer = document.getElementById("filterCheckbox");
         "past": pastBookings,
     };
 
-    // Add "Any" option first
+
     const anyLabel = document.createElement("label");
     anyLabel.className = "filter-any";
     const anyCheckbox = document.createElement("input");
@@ -74,7 +72,6 @@ const filterCheckboxContainer = document.getElementById("filterCheckbox");
     anyCheckbox.checked = true;
     anyCheckbox.addEventListener('change', function() {
         if (this.checked) {
-            // Uncheck all other options
             filterCheckboxContainer.querySelectorAll('input[type="checkbox"]:not([value="any"])').forEach(cb => {
                 cb.checked = false;
             });
@@ -96,10 +93,8 @@ const filterCheckboxContainer = document.getElementById("filterCheckbox");
 
             checkbox.checked = false;
             
-            // Handle individual checkbox changes
             checkbox.addEventListener('change', function() {
                 if (this.checked) {
-                    // Uncheck "Any" option
                     const anyOption = filterCheckboxContainer.querySelector('input[value="any"]');
                     if (anyOption) anyOption.checked = false;
                 }
@@ -159,7 +154,6 @@ status=booking.status;
             statusTitle.textContent = `${status.toUpperCase()} Bookings`;
             container.appendChild(statusTitle);
 
-            // יצירת ה-div שיעטוף את כל הכרטיסים בקבוצה
             statusGroupContainer = document.createElement("div"); // 
             statusGroupContainer.className = "status-group";
             container.appendChild(statusGroupContainer); // 
@@ -231,7 +225,7 @@ ShowBookings(sortedBookings);
         
         let filteredBookings;
         if (isAnySelected) {
-            filteredBookings = sortedBookings; // Show all bookings
+            filteredBookings = sortedBookings; 
         } else {
             filteredBookings = sortedBookings.filter(booking => selectedStatuses.includes(booking.status));
         }

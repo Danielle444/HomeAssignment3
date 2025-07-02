@@ -242,6 +242,7 @@
   justify-content: center;
   max-width: 1200px;
   margin: 0 auto 30px auto;
+    width: 100%;
 }
 
 .bookings-container .card {
@@ -522,120 +523,6 @@
   transform: translateX(-50%) scale(1.1);
 }
 
-.bookings-container .card.no-actions {
-  max-width: none;
-  margin: 0;
-  border-radius: 20px;
-  overflow: hidden;
-  background: var(--card-bg);
-  box-shadow: var(--card-shadow);
-  border: 1px solid var(--card-border);
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.bookings-container .card.no-actions:hover {
-  transform: translateY(-5px) scale(1.02);
-  box-shadow: 0 15px 40px rgba(31, 78, 121, 0.2);
-  border-color: var(--color-accent);
-}
-
-.bookings-container .card.no-actions .card-image-container {
-  height: 200px;
-  position: relative;
-  overflow: hidden;
-  flex-shrink: 0;
-}
-
-.bookings-container .card.no-actions .card-image-container img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  object-position: center;
-  background: rgba(245, 247, 250, 0.5);
-  transition: transform 0.5s ease;
-}
-
-.bookings-container .card.no-actions:hover .card-image-container img {
-  transform: scale(1.05);
-}
-
-.bookings-container .card.no-actions .card-content {
-  padding: 25px;
-  padding-bottom: 30px;
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.bookings-container .card.no-actions .card-header h3 {
-  color: var(--color-primary);
-  font-size: 20px;
-  font-weight: 700;
-  margin-bottom: 15px;
-  line-height: 1.3;
-  transition: color 0.3s ease;
-}
-
-.bookings-container .card.no-actions:hover .card-header h3 {
-  color: var(--color-accent);
-}
-
-.bookings-container .card.no-actions .card-details {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 15px;
-  margin: 20px 0;
-  padding: 20px;
-  background: rgba(245, 247, 250, 0.8);
-  border-radius: 16px;
-  border: 1px solid rgba(31, 78, 121, 0.1);
-  transition: all 0.3s ease;
-}
-
-.bookings-container .card.no-actions:hover .card-details {
-  background: rgba(245, 247, 250, 1);
-  border-color: var(--color-accent);
-}
-
-.bookings-container .card.no-actions .card-details .detail-item {
-  text-align: center;
-  padding: 10px;
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(31, 78, 121, 0.05);
-  transition: all 0.3s ease;
-}
-
-.bookings-container .card.no-actions:hover .card-details .detail-item {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(31, 78, 121, 0.1);
-}
-
-.bookings-container .card.no-actions .card-details .detail-item p {
-  margin: 0;
-  font-size: 14px;
-  color: var(--color-text);
-  line-height: 1.4;
-}
-
-.bookings-container .card.no-actions .card-details .detail-item strong {
-  color: var(--color-primary);
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  font-size: 11px;
-  display: block;
-  margin-bottom: 5px;
-  transition: color 0.3s ease;
-}
-
-.bookings-container .card.no-actions:hover .card-details .detail-item strong {
-  color: var(--color-accent);
-}
-
 @media (max-width: 768px) {
   .filters-container {
     padding: 25px 20px;
@@ -688,31 +575,6 @@
   
   .bookings-container .card-content {
     padding: 20px;
-  }
-  
-  .bookings-container .card.no-actions .card-image-container {
-    height: 160px;
-  }
-  
-  .bookings-container .card.no-actions .card-details {
-    grid-template-columns: 1fr;
-    gap: 12px;
-    padding: 15px;
-    margin: 15px 0;
-  }
-  
-  .bookings-container .card.no-actions .card-details .detail-item {
-    text-align: left;
-    padding: 12px 15px;
-  }
-  
-  .bookings-container .card.no-actions .card-content {
-    padding: 20px;
-    padding-bottom: 25px;
-  }
-  
-  .bookings-container .card.no-actions .card-header h3 {
-    font-size: 18px;
   }
   
   .no-bookings-message {
@@ -785,39 +647,7 @@
   .bookings-container .card-details .detail-item p {
     font-size: 13px;
   }
-  
-  .bookings-container .card.no-actions .card-image-container {
-    height: 150px;
-  }
-  
-  .bookings-container .card.no-actions .card-content {
-    padding: 15px;
-    padding-bottom: 20px;
-  }
-  
-  .bookings-container .card.no-actions .card-header h3 {
-    font-size: 18px;
-  }
-  
-  .bookings-container .card.no-actions .card-details {
-    padding: 12px;
-    margin: 15px 0;
-    gap: 10px;
-    grid-template-columns: 1fr;
-  }
-  
-  .bookings-container .card.no-actions .card-details .detail-item {
-    padding: 10px 12px;
-  }
-  
-  .bookings-container .card.no-actions .card-details .detail-item strong {
-    font-size: 10px;
-  }
-  
-  .bookings-container .card.no-actions .card-details .detail-item p {
-    font-size: 13px;
-  }
-  
+
   .card-actions {
     padding: 15px;
   }
